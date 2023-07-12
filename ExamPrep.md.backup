@@ -123,7 +123,7 @@ Los planes antes mencionados(Consumo, Premiun, Dedicado) son los principales.
 Tambien existen 2 planes mas de hospedaje:
 
 - **Azure App Service Environment**: o (ASE) entorno completamente aislado y dedicado para ejecutar de forma segura aplicaciones a gran escala.
-- **Kubernetes**: ()
+- **Kubernetes**: (Directo o Azure Arc) entorno aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes.
 
 	
 ### Time Out
@@ -154,18 +154,85 @@ Los binding pueden ser:
 
 
 
+# Module 03: Blob storage
+
+## Blob Storage
+Varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage.
+
+Dentro del nivel ***Standard***: Cuenta con:
+**Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
+
+**Blobs**: para guardar archivos (imagenes, videos, documentos), existen varios tipo de Blogs.
+Existen 3 tipos:
+
+- Blob: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
+
+- Page: utilizados para guardar discos(no administrados) de maquinas virtuales.
+
+- Append: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora informacion a la ya existente.
+
+**Tables**: Base de datos NoSQL, para guardar informacion de tipo llave:valor. Escalan dinaicamente, son de respuesta rapidas, siempre y cuando la informacion que se almacene sea especifica, como ser configuracions.
+
+**Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
+
+Nivel ***Premiun***: (son cuentas exclusivas) no se comparte con otros servicios, para ser mas efectivo y con mejor renidimiento, se divide en dos tipos de servicio
+
+- Block Blobs: Blog Storage (Imagenes, videos, sonidos, dosc)
+- Page Blobs: Solamente Page Blob (Imagenes de disco de maquinas virtuales)
+- File Share: similar a File server(SMB)
+
+
+
+## Blob Storage
+Es el tipo mas utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
+
+### Permisos de Acceso al Blob Storage
+
+- Permisos a nivel contenedor
+- Permisos basados RBAC(Role-Based Acces Control)
+
+La seguridad se aplica en transito, con SSL/TLS.
+
+Toda la informacion se encripta en reposo, y no se puede deshabilitar, solo se permite asignar quien administrara las llaves de des-encriptacion.
+
+### Ciclo de Vida de Blob Storage
+Existen 4 capas de acceso:
+
+- Premiun(visto antes): No es posible cambiar a otras capas.
+
+Es posible intercambar entre capas
+- **Hot**(*Dentro de Blob Standard*): para acceder a los archivos de manera frecuente. Alto costo de almacenamiento es caro, bajo costo de acceso.
+- **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
+- **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la mas costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
+
+
+## Trabajar a nivel de Codigo
+
+Libreria cliente ```azure.storage.blob```
+
+Por orden de llamada:
+
+1. **Blob Service Client**: se utiliza para acceder a la StorageAccont, se le proporciona el ConnectionString.
+2. **Blob Container Client**: ya conectado a la cuenta de Storage, se utiliza este cliente para trabajar con contenedores.
+3. **Blob Client**: para trabajar con archivos, permite eliminar, descargar, crear archivos dentro de un contenedor, que a su vez esta dentro de un Storage Account.
+4. **Append Blob Client**: para manipular archivos de tipo log.
+5. **Block Blob Client**: para trabajar con archivos de tipo bloque.
 
 
 
 
-# Module 03: Develop solutions that use Blob storage
-Blob storage
-Storage acocuint
-Blob Storage
+
 Tipos de Blob
 Seguridad, encriptacion, contenedor.
 Ciclo de vida.
 Rehidratacion de archivos
+
+
+
+
+
+
+
 
 
 # Module 04: Develop solutions that use Azure Cosmos DB storage
