@@ -157,11 +157,24 @@ Los binding pueden ser:
 # Module 03: Blob storage
 
 ## Blob Storage
-Varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage.
+Solución de almacenamiento de objetos. Está optimizado para el almacenamiento de cantidades masivas de datos no estructurados. Cuenta con varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage.
+
+Ofrece dos niveles de rendimiento de cuentas de almacenamiento, *estándar* y *premium*.
+
+- **Estándar:** se trata de la cuenta de uso general v2 estándar y se recomienda para la mayoría de los escenarios en los que se usa Azure Storage.
 
 Dentro del nivel ***Standard***: Cuenta con:
 **Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
 
+- **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser mas efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
+    - blobs en bloques,
+    - blobs en páginas o
+    - recursos compartidos de archivos.
+
+
+- Block Blobs: Blog Storage (Imagenes, videos, sonidos, dosc)
+- Page Blobs: Solamente Page Blob (Imagenes de disco de maquinas virtuales)
+- File Share: similar a File server(SMB)
 **Blobs**: para guardar archivos (imagenes, videos, documentos), existen varios tipo de Blogs.
 Existen 3 tipos:
 
@@ -175,11 +188,7 @@ Existen 3 tipos:
 
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
 
-Nivel ***Premiun***: (son cuentas exclusivas) no se comparte con otros servicios, para ser mas efectivo y con mejor renidimiento, se divide en dos tipos de servicio
 
-- Block Blobs: Blog Storage (Imagenes, videos, sonidos, dosc)
-- Page Blobs: Solamente Page Blob (Imagenes de disco de maquinas virtuales)
-- File Share: similar a File server(SMB)
 
 
 
@@ -220,26 +229,55 @@ Por orden de llamada:
 
 
 
+# Module 04: Azure Cosmos DB storage
+
+Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener multiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
+
+**Consistencia**: se refiere a la consistencia de la informacion en cada replica. Esto afecta directamente a la performance.
+
+**Baja latencia**: tanto para escritura como para lectura, hay  una respuesta menor a los 10ms en el 99% de los casos. 
+
+### Jerarquía de servicio
+
+**Azure Cosmo DB Account**: unidad fundamental de distribución global y alta disponibilidad, puede agregar y quitar regiones de Azure en su cuenta en cualquier momento.
+
+**Azure Cosmos DB database**: Una base de datos es análoga a un espacio de nombres. Una base de datos es la unidad de administración de un conjunto de contenedores.
+
+**Azure Cosmos DB containers**: Permite la creacion de tablas, Store Procedures, funciones definidas por el usuario, triggers. Es la unidad de escalabilidad del rendimiento y almacenamiento aprovisionados. Un contenedor se divide de forma horizontal y luego se replica en varias regiones.
+
+**Azure Cosmos DB items**:  En función de la API que use, un elemento de Azure Cosmos DB puede representar un documento de una colección, una fila de una tabla, o un nodo o un borde de un grafo. Se refiere a los registros(document, row, node, edge).
 
 
-Tipos de Blob
-Seguridad, encriptacion, contenedor.
-Ciclo de vida.
-Rehidratacion de archivos
+**Request Units (RU)**, 3 modos
+- Provisioned throughtput
+- Serverless
+- Autoscale
+
+### API para Cosmos DB
+
+Azure Cosmos DB ofrece varias API de base de datos, entre las que se incluyen las siguientes:
+
+- Azure Cosmos DB para NoSQL
+- Azure Cosmos DB for MongoDB
+- Azure Cosmos DB para PostgreSQL
+- Azure Cosmos DB for Apache Cassandra
+- Azure Cosmos DB for Table
+- Azure Cosmos DB for Apache Gremlin
+
+### Unidades de solicitud
+Azure Cosmos DB normaliza el costo de todas las operaciones de base de datos y este se expresa en unidades de solicitud (o RU, para abreviar). Una unidad de solicitud representa los recursos del sistema, como CPU e IOPS, y la memoria que se necesitan para realizar las operaciones de base de datos
+
+El tipo de cuenta de Azure Cosmos DB que usa determina el modo en que se cobrarán las RU consumidas.
+
+Hay tres modos en los que se puede crear una cuenta:
+
+- **Modo de rendimiento aprovisionado**:se realiza por segundos en incrementos de 100 RU/segundo. Para escalar el rendimiento aprovisionado para la aplicación, puede aumentar o disminuir el número de RU en cualquier momento, en incrementos o decrementos de 100 RU.
+- **Modo sin servidor**: no es necesario aprovisionar rendimiento al crear recursos, factura el número de unidades de solicitud consumidas por las operaciones de base de datos.
+- **Modo de escalabilidad automática**: puede escalar de forma automática e instantánea el rendimiento (RU/s) de la base de datos o del contenedor en función de su uso. Adecuado para cargas de trabajo críticas que tienen patrones de tráfico variables o imprevisibles y requieren SLA para el alto rendimiento y la escala.
 
 
+[Creación de CosmosDB Account + DB + Container + Item](./Resource/Module04/CreateCosmosDBforNoSQL.mkv)
 
-
-
-
-
-
-
-# Module 04: Develop solutions that use Azure Cosmos DB storage
-Cosmos DB
-Base distribuida globalmente.
-Casandra
-Particiones y usos.
 
 
 # Module 05: Implement infrastructure as a service solutions
