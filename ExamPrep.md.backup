@@ -4,9 +4,9 @@ AZ-204
 
 ### Explorar Azure App Service
 
-Servicio basado en HTTP, donde podemos alojar aplicaciones web, RestAPI, BackEnd de aplicaciones moviles.
+Servicio basado en HTTP, donde podemos alojar aplicaciones web, RestAPI, BackEnd de aplicaciones móviles.
 
-Escalacion y Desescalacion automatica.
+Escalacion y Desescalacion automática.
 
 CI/CD
 
@@ -17,17 +17,17 @@ CI/CD
 * Local Git repository
 * And others
 
-**Ranuras de implementacion**: Nos permiten crear las implementaciones en distintos ambientes sin tener que modificar las aplicaciones.
+**Ranuras de implementación**: Nos permiten crear las implementaciones en distintos ambientes sin tener que modificar las aplicaciones.
 
 ### App Service plan
 
-Servicio computacional(por debajo), con diferentes pleanes. (Servicio de computo + Caracteristicas). Es un recurso que se utiliza para alojar las App Services(siempre debe existir este recurso para alojar apps)
+Servicio computacional(por debajo), con diferentes planes. (Servicio de computo + Características). Es un recurso que se utiliza para alojar las App Services(siempre debe existir este recurso para alojar apps)
 
 App Service Plan, se miden para calcular el costo:
  - CPU
  - Memoria
  - Disco
- - Funcionalida
+ - Funcionalidad
  
 Por cada ASP se pueden crear tantas aplicaciones como el plan permita.
 
@@ -41,37 +41,37 @@ Cada plan de App Service define:
 
 El **plan de tarifa** de un plan de App Service determina qué características de App Service obtendrá y cuánto paga por el plan.
 
-**Categorias Plan de tarifa** (determina qué características de App Service obtendrá y cuánto paga por el plan).
+**Categorías Plan de tarifa** (determina qué características de App Service obtendrá y cuánto paga por el plan).
 
-- **Proceso de compartido**: Gratis y Compartido, son los mas basicos, se ejecutan en recursos compartidos con otros usuarios de Azure. No escala horizontalmente.
+- **Proceso de compartido**: Gratis y Compartido, son los mas básicos, se ejecutan en recursos compartidos con otros usuarios de Azure. No escala horizontalmente.
 - **Dedicated compute (Proceso dedicado)**: (Básico, Estándar,Premium, PremiumV2 y PremiumV3) las aplicaciones se ejecutan en recursos dedicados, las aplicaciones del mismo plan comparten recursos.
-- **Aislado**: (Aislado y AisladoV2) proporciona aislamiento de red, y aislamiento de procesos. Maximas posibilidades de escalabilidad horizontal.
+- **Aislado**: (Aislado y AisladoV2) proporciona aislamiento de red, y aislamiento de procesos. Máximas posibilidades de escalabilidad horizontal.
 
 
 **Redundancia por zona**: cuando un data center se cae, dentro de la misma zona, se utilizan otros data centers.
 
 ### Escalamiento
 
-Cuando una aplicacion tiene muchos request, por lo que se debe incorporar mas recursos.
+Cuando una aplicación tiene muchos request, por lo que se debe incorporar mas recursos.
 
 El **escalamiento horizontal** implica la imcrementacion de mas App Service Plan(mas recursos de computo) con todo lo que tenga.
 
 El **escalado vertical** es otorgar mas o menos recursos, implica para este caso cambiar el plan.
 
-En planes basicos el escalado es manual.
+En planes básicos el escalado es manual.
 
 ### Ranuras de implementación 
 Son aplicaciones activas con sus propios nombres de host. Los  elementos de contenido y configuraciones de aplicaciones se pueden intercambiar entre dos ranuras de implementación, incluida la ranura de producción. Puede implementar la aplicación en un entorno de ensayo y, a continuación, intercambiar los espacios de ensayo y producción.
 
 ### App Service Web App
 
-Es la aplicacion ejecutandose, dentro de un App Service Plan. (Tipo de aplicacion, Lenguaje usado, es contenedor o no).
+Es la aplicación ejecutándose, dentro de un App Service Plan. (Tipo de aplicación, Lenguaje usado, es contenedor o no).
 
 [Creación de una aplicación web HTML estática mediante Azure Cloud Shell](./Resource/Module01/CreateStaticWebApp.mkv)
 
 ### Implementación automatizada y manual
-*Implementación automatizada*: (o implementacion continua) roceso que se usa para insertar nuevas características y correcciones de errores en un patrón repetitivo y rápido con un efecto mínimo en los usuarios finales.
-Se admiten varios origenes:
+*Implementación automatizada*: (o implementación continua) proceso que se usa para insertar nuevas características y correcciones de errores en un patrón repetitivo y rápido con un efecto mínimo en los usuarios finales.
+Se admiten varios orígenes:
 - **Azure DevOps Services**: inserta el código en Azure DevOps Services, compila, ejecuta pruebas, genera una versión, e inserta el código en una aplicación web de Azure.
 - **GitHub**: directamente desde GitHub. Los cambios que se insertan en la rama de producción en GitHub se implementan automáticamente.
 - **Bitbucket**: similar a GitHub.
@@ -82,15 +82,15 @@ Se admiten varios origenes:
 - **Implementación desde un archivo Zip**: use `curl` o una utilidad HTTP similar para enviar un archivo ZIP de los archivos de la aplicación a App Service.
 - **FTP/S**: FTP o FTPS es una manera tradicional de insertar el código en muchos entornos de hospedaje, incluido App Service.
 
-### Autenticacion y Autorizacion
-Funcionalidad de App Service, implementacion sencilla, que requiere de autenticacion. 
+### Autenticación y Autorización
+Funcionalidad de App Service, implementación sencilla, que requiere de autenticación. 
 Marcos web incluidos:
 - Azure AD
 - Facebook
 - Google
 - Twitter
 
-### Caracteristicas de Networking
+### Características de Networking
 Debe controlar el tráfico de red entrante y saliente.
 Dentro de App Service hay dos implementaciones principales
 - Multi-tenant: Multi inquilino, muchos clientes diferentes en la misma unidad de escalado.
@@ -98,8 +98,8 @@ Dentro de App Service hay dos implementaciones principales
 
 ### Configurar Web App Settings
 como se escalan, como se crean,
-ranuras de implementacion, precios
-creacion de dominios
+ranuras de implementación, precios
+creación de dominios
 
 
 
@@ -109,43 +109,43 @@ creacion de dominios
 ℹ️ Durable Functions Deprecada
 
 ## Azure Functions 
-codigo(de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actua como disparador de la ejecucion del codigo.
-[Azure Function como nucleo de servicios](/Resource/Module02/AzureFunctions.png)
+código(de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
+[Azure Function como núcleo de servicios](/Resource/Module02/AzureFunctions.png)
 
 Se puede desarrollar local y luego subirlo dentro de un Function app. Se usan para ejecutar en un periodo muy corto de tiempo.
 
 Existe 3 planes(hosting) indica el tamaño de la VM, como escala y desescala:
 	- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un request, se levanta el servicio y responde(lo que hace mas lenta la respuesta)-
-	- **Premiun**: se puede elegir (en maquinas virtuales) los recursos, escala y desescala de manera automatica segun la necesidad, pero, vienen pre-calentadas(always on siempre encendido), ya que se paga un precio fijo.
+	- **Premiun**: se puede elegir (en maquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen pre-calentadas(always on siempre encendido), ya que se paga un precio fijo.
 	- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado(se usan reglas), Always On/Off, precio fijo.
 
 Los planes antes mencionados(Consumo, Premiun, Dedicado) son los principales.
-Tambien existen 2 planes mas de hospedaje:
+También existen 2 planes mas de hospedaje:
 
 - **Azure App Service Environment**: o (ASE) entorno completamente aislado y dedicado para ejecutar de forma segura aplicaciones a gran escala.
 - **Kubernetes**: (Directo o Azure Arc) entorno aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes.
 
 	
 ### Time Out
-Por defecto es de 5 minutos, y como maximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
+Por defecto es de 5 minutos, y como máximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
 El tiempo puede ser mayor en planes Premiun y Dedicados donde por defecto tienen definido 302 minutos.
 
 ### Cuenta de almacenamiento
 Al crear una Function App, <mark>SIEMPRE</mark> se debe crear un Storage Account de uso general, ya que las funciones guardan logs de estados.
 
 ### Controlador de escalado
-O Scale Controller (solo para Premiun y Por consumo), automaticamente monitorea(revisa la cola de request de) las funciones y determina cual requiere mas recursos(instancias) para atender las peticiones, a medida que disminuyen las peticiones, va realizando el desescalaiento.
+O Scale Controller (solo para Premiun y Por consumo), automáticamente monitorea(revisa la cola de request de) las funciones y determina cual requiere mas recursos(instancias) para atender las peticiones, a medida que disminuyen las peticiones, va realizando el desescalaiento.
 
-El maximo(y por defecto) de instancias que se puede escalar es de 200 instancias. Es posible definirle un numero menor en el archivo de configuracion.
+El máximo(y por defecto) de instancias que se puede escalar es de 200 instancias. Es posible definirle un numero menor en el archivo de configuración.
 
-Se debe considerar que las Function App, deben desescalar a todas las funciones contenidas, por lo que se debe considerar que si una funcion convienen colocarla aislada de otras funciones.
+Se debe considerar que las Function App, deben desescalar a todas las funciones contenidas, por lo que se debe considerar que si una función convienen colocarla aislada de otras funciones.
 
 ### Resumen
-La funcion tiene dos componentes principales, la funcion (en un lenguaje determinado, por ejemplo c#)-
+La función tiene dos componentes principales, la función (en un lenguaje determinado, por ejemplo c#)-
 
-Archivo de configuracion llamado function.json, que define cual es el disparador(trigger) de la funcion, y cual es el binding(conexiones a otros servicios) de la funcion.
+Archivo de configuración llamado function.json, que define cual es el disparador(trigger) de la función, y cual es el binding(conexiones a otros servicios) de la función.
 
-Una funcion tiene 1 unico trigger, pero puede tener varios bindings.
+Una función tiene 1 único trigger, pero puede tener varios bindings.
 
 Los binding pueden ser:
  - IN
@@ -182,9 +182,9 @@ Existen 3 tipos:
 
 - Page: utilizados para guardar discos(no administrados) de maquinas virtuales.
 
-- Append: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora informacion a la ya existente.
+- Append: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora información a la ya existente.
 
-**Tables**: Base de datos NoSQL, para guardar informacion de tipo llave:valor. Escalan dinaicamente, son de respuesta rapidas, siempre y cuando la informacion que se almacene sea especifica, como ser configuracions.
+**Tables**: Base de datos NoSQL, para guardar información de tipo llave:valor. Escalan dinaicamente, son de respuesta rapidas, siempre y cuando la información que se almacene sea especifica, como ser configuracions.
 
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
 
@@ -202,7 +202,7 @@ Es el tipo mas utilizado, para el desarrollo de aplicaciones, por ejemplo imagen
 
 La seguridad se aplica en transito, con SSL/TLS.
 
-Toda la informacion se encripta en reposo, y no se puede deshabilitar, solo se permite asignar quien administrara las llaves de des-encriptacion.
+Toda la información se encripta en reposo, y no se puede deshabilitar, solo se permite asignar quien administrara las llaves de des-encriptacion.
 
 ### Ciclo de Vida de Blob Storage
 Existen 4 capas de acceso:
@@ -231,9 +231,9 @@ Por orden de llamada:
 
 # Module 04: Azure Cosmos DB storage
 
-Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener multiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
+Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener múltiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
 
-**Consistencia**: se refiere a la consistencia de la informacion en cada replica. Esto afecta directamente a la performance.
+**Consistencia**: se refiere a la consistencia de la información en cada replica. Esto afecta directamente a la performance.
 
 **Baja latencia**: tanto para escritura como para lectura, hay  una respuesta menor a los 10ms en el 99% de los casos. 
 
@@ -332,7 +332,7 @@ es un script que contiene una serie de instrucciones que se usan para compilar u
 **WebHooks**
 
 ## Container Instances
-Permite trabajar con un contenedor o con una aplicacion que esta contenida en varias aplicaciones(uso mas comun).
+Permite trabajar con un contenedor o con una aplicación que esta contenida en varias aplicaciones(uso mas comun).
 
 - **Container Groups**: recurso de nivel superior de Azure Container Instances es el **grupo de contenedores**. Un grupo de contenedores es una colección de contenedores que se programan en la misma máquina host. Los contenedores de un grupo comparten un ciclo de vida, los recursos, la red local y los volúmenes de almacenamiento. Es similar en concepto a un pod en Kubernetes.
 
@@ -346,7 +346,7 @@ Permite trabajar con un contenedor o con una aplicacion que esta contenida en va
 
 - **Redes**: se comparten direcciones IP y puertos.
 
-- **Storage**: se utilizan "volumenes" concepto de contenedores, es un recurso de file server, como un espacio de disco. Que contienen informacion de aplicaciones. Sirve para tener un espacio de almacenamiento persistente. En Azure puede ser dentro de una Maquina Virtual, o tambien, puede ser un Azure Files dentro de un Storage Account.
+- **Storage**: se utilizan "volumenes" concepto de contenedores, es un recurso de file server, como un espacio de disco. Que contienen información de aplicaciones. Sirve para tener un espacio de almacenamiento persistente. En Azure puede ser dentro de una Maquina Virtual, o tambien, puede ser un Azure Files dentro de un Storage Account.
 
 - **Escenarios frecuentes**: útiles en los casos en los que se quiere dividir una sola tarea funcional en varias imágenes de contenedor. Luego, estas imágenes las pueden entregar diferentes equipos y pueden tener diversos requisitos de recursos. Considerar a ```docker build``` o ```docker push``` para compilar e insertar una sola imagen de contenedor(sin instalacion local).
 
@@ -379,7 +379,7 @@ Las aplicaciones basadas en Azure Container Apps se pueden escalar de forma din�
 
 El componente de **middleware de autenticación y autorización** es una característica de la plataforma que se ejecuta como contenedor sidecar en cada réplica de la aplicación. Cuando está habilitado, cada solicitud HTTP entrante pasa por el nivel de seguridad antes de que la aplicación lo controle. El módulo de autenticación y autorización se ejecuta en un contenedor independiente, aislado del código de la aplicación.
 
-Existen dos flujos de inicio de sesion:
+Existen dos flujos de inicio de sesión:
 
 - **Sin el SDK del proveedor**: la aplicación delega el inicio de sesión federado a Container Apps.
 - **Con el SDK del proveedor**: la aplicación inicia manualmente la sesión del usuario en el proveedor y, luego, envía el token de autenticación a Container Apps para la validación.
@@ -387,7 +387,7 @@ Existen dos flujos de inicio de sesion:
 ### Microservicios
 Las arquitecturas de microservicios permiten desarrollar, actualizar, controlar versiones y escalar áreas básicas de funcionalidad de forma independiente en un sistema general.
 
-**Distributed Application Runtime (Dapr)**: incluye características como la observabilidad, la publicación/suscripción y la invocación de servicio a servicio con TLS mutuo, reintentos, etc.
+**Distributed Application Runtime (Dapr)**: simplifican la creación de aplicaciones distribuidas basadas en microservicios. Incluye características como la observabilidad, la publicación/suscripción y la invocación de servicio a servicio con TLS mutuo, reintentos, etc. Proporciona funcionalidades para habilitar la intercomunicación de aplicaciones mediante la mensajería a través de pub/sub o llamadas de servicio a servicio confiables y seguras.
 
 **Container App Envaironment**: ambiente donde se crean y ejecuta Container Apps.
 
@@ -395,11 +395,115 @@ Las arquitecturas de microservicios permiten desarrollar, actualizar, controlar 
 
 ```az containerapp revision list``` : enumera todas las revisiones asociadas a la aplicación de contenedor.
 
-# Module 06: Implement user authentication and authorization
-Plataforma de identidad
-Auth2.0
-Microsoft Auth Library
-Microsoft Graph
+
+
+# Module 06: Implementación de la autenticación y autorización de usuarios
+
+
+## Plataforma de identidad(v2.0)
+Es un conjunto de herramientas que incluye un servicio de autenticación, bibliotecas de código abierto y herramientas de administración de aplicaciones.
+
+Permite realizar configuraciones desde el portal. Soporta Auth2.0 y OpenAI lo que permite autenticarse desde múltiples servicios corporativos, de servicios federados.
+
+La plataforma esta formada por:
+
+- Servicio de autenticación compatible con los estándares OAuth 2.0 y OpenID Connect, permite autenticar: 
+  + Cuentas profesionales o educativas
+  + Cuentas personales de Microsoft
+  + Cuentas sociales o locales
+- Bibliotecas de código abierto
+- Portal de administración de aplicaciones
+- PowerShell y API de configuración de aplicaciones
+
+
+**Service Principal**: objeto dentro del Active Directory. Al referirnos a aplicaciones creamos un Service Principal para registrar aplicaciones. 
+
+**Objeto de aplicación**: se usa como plantilla o plano técnico para crear uno o varios objetos de entidad de servicio. La entidad de servicio se crea en todos los inquilinos en los que se utiliza la aplicación. De forma similar a una clase en la programación orientada a objetos, el objeto de aplicación tiene algunas propiedades estáticas que se aplican a todas las entidades de servicio creadas (o instancias de aplicación).
+
+El objeto de aplicación describe **tres aspectos** de una aplicación: 
+
+- la forma en que el servicio emite tokens para tener acceso a la aplicación 
+- los recursos a los que la aplicación podría necesitar tener acceso
+- las acciones que puede realizar la aplicación
+
+Al crear una aplicación en el portar se crea:
+ObjectID: contiene toda la configuración de seguridad en el tenant de la aplicación.
+Application ID: Id dentro del Azure Active Directory.
+
+1 Object Id = 1 aplicación
+
+1 aplicación = múltiples aplication ID
+
+## Permisos
+Se representa como un valor de cadena. Admite dos tipos de permisos:
+
+**Delegados**: se utilizan en aplicaciones que tienen un usuario con la sesión iniciada, el usuario o un administrador dan su consentimiento para los permisos que la aplicación requiere.
+
+
+**Aplicación**: los usan las aplicaciones que se ejecutan sin la presencia de un usuario con la sesión iniciada, aplicaciones que se ejecutan como demonios o servicios en segundo plano. Solo un administrador puede dar su consentimiento para los permisos de acceso exclusivo de aplicación.
+
+**Consentimientos**:
+
+- **Usuario estático**: debe especificar todos los permisos que necesita en la configuración de la aplicación en Azure Portal.
+- **Incremental y dinámico**: solicita permisos de forma incremental, puede solicitar un conjunto mínimo de permisos por adelantado y solicitar más con el tiempo, a medida que el cliente use características de aplicación adicionales.
+- **Administrador**: si la aplicación necesita acceder a determinados permisos con privilegios elevados.
+
+## Acceso condicional
+Permite que los desarrolladores y clientes empresariales protejan los servicios de diversas formas, entre las que se incluyen las siguientes:
+
+- Autenticación multifactor
+- Autorización para que solo los dispositivos inscritos en Intune accedan a servicios específicos
+- Restricción de ubicaciones de usuario e intervalos IP
+
+
+
+## MSAL (Microsoft Auth Library)
+Liberia que se utiliza dentro de la aplicación a nivel de código. Soporta .net, JavaScript, Python, Android y iOS. Permite que los desarrolladores adquieran tokens desde la Plataforma de identidad de Microsoft para autenticar usuarios y acceder a API web protegidas.
+
+es posible adquirir un token desde muchos tipos de aplicación: aplicaciones web, API web, aplicaciones de una sola página (JavaScript), aplicaciones móviles y nativas, así como aplicaciones del lado servidor y demonios.
+
+### Flujos de autenticación
+
+**Código de autorización**	Las aplicaciones nativas y web obtienen tokens de forma segura en el nombre del usuario.
+**Credenciales de cliente**	Las aplicaciones de servicio se ejecutan sin interacción del usuario.
+**En nombre de**	La aplicación llama a una API web o de servicio, que a su vez llama a Microsoft Graph.
+**Implícita**	Se usa en aplicaciones basadas en explorador.
+**Código del dispositivo**	Habilita el inicio de sesión en un dispositivo mediante otro dispositivo que tiene un explorador.
+**Integrado en Windows**	Los equipos Windows adquieren de forma silenciosa un token de acceso cuando están unidos a un dominio.
+**Interactive**	Las aplicaciones móviles y de escritorio llaman a Microsoft Graph nombre de un usuario.
+**Nombre de usuario y contraseña**	La aplicación inicia la sesión de un usuario con su nombre de usuario y contraseña.
+
+
+**Aplicaciones cliente públicas**: aplicaciones que se ejecutan en dispositivos o equipos de escritorio o en un explorador web. No son de confianza para mantener de manera segura secretos de aplicación, por lo que solo tienen acceso a API web en nombre del usuario (solo admiten flujos de cliente públicos).
+
+**Aplicaciones cliente confidenciales**: se ejecutan en servidores (aplicaciones web, aplicaciones de API web o incluso aplicaciones de servicio o demonio). Se consideran de acceso difícil pueden mantener un secreto de aplicación.
+
+## Firmas compartidas
+Una Firma de acceso compartido (SAS) es un URI que concede derechos de acceso restringidos a recursos de Azure Storage.
+
+Existen tres tipos de firmas de acceso compartido
+
+- **SAS de Delegación de Usuario**: la mas recomendable. se protege con las credenciales de Azure Active Directory y también por los permisos especificados para la SAS. Una SAS de delegación de usuarios solo se aplica a Blob Storage.
+- **SAS de Servicio**: se protege con la clave de cuenta de almacenamiento. Una SAS de servicio delega el acceso a un recurso en los servicios de Azure Storage siguientes: Blob Storage, Queue Storage, Table Storage o Azure Files.
+- **SAS de Cuenta**: se protege con la clave de cuenta de almacenamiento. Delega el acceso a los recursos en uno o varios de los servicios de almacenamiento.
+
+
+
+## Microsoft Graph
+Nos brinda información sobre todo el ecosistema de Microsoft 365, proporciona un modelo de programación unificado para acceder ad atos en Microsoft 365, Windows 10 y Enterprise Mobility + Security. Facilita el acceso y el flujo de datos y cómo crear consultas mediante REST y código. Crear aplicaciones para organizaciones y consumidores que interactúen con millones de usuarios.
+
+
+Tres componentes principales facilitan el acceso y el flujo de datos:
+
+
+- **Microsoft Graph API** ofrece un único punto de conexión. Puede usar las API REST o los SDK para acceder al punto de conexión. También incluye un conjunto eficaz de servicios que permiten administrar la identidad, el acceso, el cumplimiento y la seguridad de usuarios y dispositivos, y ayudan a proteger a las organizaciones frente a la filtración o la pérdida de datos.
+- **Conectores de Microsoft Graph** funcionan en la dirección de entrada y entregan datos externos en la nube de Microsoft en aplicaciones y servicios, con el fin de mejorar las experiencias de Microsoft 365, como Búsqueda de Microsoft. Existen conectores para muchos orígenes de datos de uso frecuente, como Box, Google Drive, Jira y Salesforce.
+- **Microsoft Graph Data Connect** conjunto de herramientas para simplificar la entrega de datos de Microsoft Graph en almacenes de datos de Azure conocidos de forma segura y escalable.
+
+
+
+
+
 
 
 # Module 07:Implement secure cloud solutions
@@ -408,12 +512,12 @@ AppConfiguration
 
 
 # Module 08: Implement API Management
-Servicio de gfestion de APIs, politicas, parametros, suscripcion para desarrolladores.
+Servicio de gestion de APIs, políticas, parámetros, suscripción para desarrolladores.
 
 
 # Module 09: Develop event-based solutions
-Event Grid gestion de eventos de menor flujo
-Event Hub gestion de muchos eventos por segundo
+Event Grid gestión de eventos de menor flujo
+Event Hub gestión de muchos eventos por segundo
 
 
 
