@@ -591,17 +591,38 @@ Esta unidad proporciona una referencia para las siguientes directivas de API Man
 - **Reintentar :** reintenta ejecutar las instrucciones de directiva adjuntas, si y hasta que se cumple la condición. La ejecución se repite en los intervalos de tiempo especificados y hasta el número de reintentos indicado.
 
 
+# Module 09: Soluciones basadas en eventos 
+
+Application Insights es una extensión de Azure Monitor y proporciona características de Supervisión de rendimiento de aplicaciones (también conocida como "APM"). Útiles para supervisar aplicaciones de desarrollo, pruebas y producción
+
+Instrumentar las aplicaciones para habilitar Application Insights a fin de supervisar el rendimiento y ayudar a solucionar los problemas.
+
+Un **evento** es una situación que sucede en una aplicación o servicio que le hace llegar al mundo que algo esta sucediendo, pero no le interesa si se realiza alguna acción o no. Seria solo una notificación.
+
+## Event Grid
+Solución para la gestión de eventos. Concentrara todos los eventos desde diferentes orígenes.
+
+Eventos discretos: se refiere al manejo de poca cantidad de eventos.
+
+Cinco conceptos fundamentales:
+
+- **Eventos**: información pequeña que se genera cuando algo se genera en el sistema.
+- **Fuente de Eventos**: quien genera esos eventos, por ejemplo, un storage account.
+- **Topics**: se utiliza para contextualizar los eventos, por ejemplo, eventos de servicios, eventos de errores de aplicación.
+- **Suscripción**: cuando el event grid recibe eventos, y se desea que los suscriptores escuchen los eventos, por ejemplo una pagina web, como si fuera un Event Handler. Por lo que genera una suscripción para cada uno de esos destinos que recibirán los eventos.
+- **Event Handlers**:
+
+
+## Event Hub
+Servicio de gestión de (**muchos**) eventos por segundo. Con un flujo de eventos constantes. Permitiendo manejar grandes volúmenes de información de eventos.
+Se utiliza para hacer analítica de Data en tiempo real.
 
 
 
-# Module 09: Develop event-based solutions
-Event Grid gestión de eventos de menor flujo
-Event Hub gestión de muchos eventos por segundo
 
+# Module 10: Soluciones basadas en mensajes
 
-
-
-# Module 10: Develop message-based solutions
+Un **mensaje** ser procesado de alguna manera, y saber si se proceso correctamente o no.
 Colas de storge account
 Service boss
 
