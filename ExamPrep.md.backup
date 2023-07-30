@@ -1,12 +1,12 @@
 AZ-204 
-# Module 01: Create Azure App Service web apps
+# Module 01: Crear Azure App Service web apps
 ## Implementar Azure App Service Web Apps
 
 ### Explorar Azure App Service
 
 Servicio basado en HTTP, donde podemos alojar aplicaciones web, RestAPI, BackEnd de aplicaciones móviles.
 
-Escalacion y Desescalacion automática.
+Escalación y Des escalación automática.
 
 CI/CD
 
@@ -21,7 +21,7 @@ CI/CD
 
 ### App Service plan
 
-Servicio computacional(por debajo), con diferentes planes. (Servicio de computo + Características). Es un recurso que se utiliza para alojar las App Services(siempre debe existir este recurso para alojar apps)
+Servicio computacional (por debajo), con diferentes planes. (Servicio de cómputo + Características). Es un recurso que se utiliza para alojar las App Services (siempre debe existir este recurso para alojar apps)
 
 App Service Plan, se miden para calcular el costo:
  - CPU
@@ -43,8 +43,8 @@ El **plan de tarifa** de un plan de App Service determina qué características 
 
 **Categorías Plan de tarifa** (determina qué características de App Service obtendrá y cuánto paga por el plan).
 
-- **Proceso de compartido**: Gratis y Compartido, son los mas básicos, se ejecutan en recursos compartidos con otros usuarios de Azure. No escala horizontalmente.
-- **Dedicated compute (Proceso dedicado)**: (Básico, Estándar,Premium, PremiumV2 y PremiumV3) las aplicaciones se ejecutan en recursos dedicados, las aplicaciones del mismo plan comparten recursos.
+- **Proceso de compartido**: Gratis y Compartido, son los más básicos, se ejecutan en recursos compartidos con otros usuarios de Azure. No escala horizontalmente.
+- **Dedicated compute (Proceso dedicado)**: (Básico, Estándar, Premium, PremiumV2 y PremiumV3) las aplicaciones se ejecutan en recursos dedicados, las aplicaciones del mismo plan comparten recursos.
 - **Aislado**: (Aislado y AisladoV2) proporciona aislamiento de red, y aislamiento de procesos. Máximas posibilidades de escalabilidad horizontal.
 
 
@@ -52,11 +52,11 @@ El **plan de tarifa** de un plan de App Service determina qué características 
 
 ### Escalamiento
 
-Cuando una aplicación tiene muchos request, por lo que se debe incorporar mas recursos.
+Cuando una aplicación tiene muchos Request, por lo que se debe incorporar más recursos.
 
-El **escalamiento horizontal** implica la imcrementacion de mas App Service Plan(mas recursos de computo) con todo lo que tenga.
+El **escalamiento horizontal** implica la incrementación de más App Service Plan (más recursos de cómputo) con todo lo que tenga.
 
-El **escalado vertical** es otorgar mas o menos recursos, implica para este caso cambiar el plan.
+El **escalado vertical** es otorgar más o menos recursos, implica para este caso cambiar el plan.
 
 En planes básicos el escalado es manual.
 
@@ -93,34 +93,27 @@ Marcos web incluidos:
 ### Características de Networking
 Debe controlar el tráfico de red entrante y saliente.
 Dentro de App Service hay dos implementaciones principales
-- Multi-tenant: Multi inquilino, muchos clientes diferentes en la misma unidad de escalado.
-- Single-Tentant(App Service Environment (ASE) de un único inquilino
-
-### Configurar Web App Settings
-como se escalan, como se crean,
-ranuras de implementación, precios
-creación de dominios
+- **Multi-tenant**: Multi inquilino, muchos clientes diferentes en la misma unidad de escalado.
+- **Single-Tentant** App Service Environment (ASE) de un único inquilino
 
 
-
-
-
-# Module 02: Implement Azure Functions
+# Module 02: Implementando Azure Functions
 ℹ️ Durable Functions Deprecada
 
 ## Azure Functions 
-código(de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
+Código de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
 [Azure Function como núcleo de servicios](/Resource/Module02/AzureFunctions.png)
 
-Se puede desarrollar local y luego subirlo dentro de un Function app. Se usan para ejecutar en un periodo muy corto de tiempo.
+Se puede desarrollar local y luego subirlo dentro de un Function App. Se usan para ejecutar en un periodo muy corto de tiempo.
 
 Existe 3 planes(hosting) indica el tamaño de la VM, como escala y desescala:
-	- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un request, se levanta el servicio y responde(lo que hace mas lenta la respuesta)-
-	- **Premiun**: se puede elegir (en maquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen pre-calentadas(always on siempre encendido), ya que se paga un precio fijo.
-	- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado(se usan reglas), Always On/Off, precio fijo.
+	- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, Microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un Request, se levanta el servicio y responde (lo que hace más lenta la  respuesta)
+	- **Premiun**: se puede elegir (en máquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen precalentadas (Always On siempre encendido), ya que se paga un precio fijo.
+	- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado (se usan reglas), Always On/Off, precio fijo.
 
-Los planes antes mencionados(Consumo, Premiun, Dedicado) son los principales.
-También existen 2 planes mas de hospedaje:
+Los planes antes mencionados (Consumo, Premium, Dedicado) son los principales.
+
+También existen 2 planes más de hospedaje:
 
 - **Azure App Service Environment**: o (ASE) entorno completamente aislado y dedicado para ejecutar de forma segura aplicaciones a gran escala.
 - **Kubernetes**: (Directo o Azure Arc) entorno aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes.
@@ -128,20 +121,20 @@ También existen 2 planes mas de hospedaje:
 	
 ### Time Out
 Por defecto es de 5 minutos, y como máximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
-El tiempo puede ser mayor en planes Premiun y Dedicados donde por defecto tienen definido 302 minutos.
+El tiempo puede ser mayor en planes Premium y Dedicados donde por defecto tienen definido 302 minutos.
 
 ### Cuenta de almacenamiento
 Al crear una Function App, <mark>SIEMPRE</mark> se debe crear un Storage Account de uso general, ya que las funciones guardan logs de estados.
 
 ### Controlador de escalado
-O Scale Controller (solo para Premiun y Por consumo), automáticamente monitorea(revisa la cola de request de) las funciones y determina cual requiere mas recursos(instancias) para atender las peticiones, a medida que disminuyen las peticiones, va realizando el desescalaiento.
+O Scale Controller (solo para Premium y Por consumo), automáticamente monitorea (revisa la cola de request de) las funciones y determina cual requiere más recursos(instancias) para atender las peticiones, a medida que disminuyen las peticiones, va realizando el desescalaiento.
 
-El máximo(y por defecto) de instancias que se puede escalar es de 200 instancias. Es posible definirle un numero menor en el archivo de configuración.
+El máximo (y por defecto) de instancias que se puede escalar es de 200 instancias. Es posible definirle un número menor en el archivo de configuración.
 
 Se debe considerar que las Function App, deben desescalar a todas las funciones contenidas, por lo que se debe considerar que si una función convienen colocarla aislada de otras funciones.
 
 ### Resumen
-La función tiene dos componentes principales, la función (en un lenguaje determinado, por ejemplo c#)-
+La función tiene dos componentes principales, la función (en un lenguaje determinado, por ejemplo, c#)
 
 Archivo de configuración llamado function.json, que define cual es el disparador(trigger) de la función, y cual es el binding(conexiones a otros servicios) de la función.
 
@@ -166,7 +159,7 @@ Ofrece dos niveles de rendimiento de cuentas de almacenamiento, *estándar* y *p
 Dentro del nivel ***Standard***: Cuenta con:
 **Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
 
-- **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser mas efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
+- **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser más efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
     - blobs en bloques,
     - blobs en páginas o
     - recursos compartidos de archivos.
@@ -189,11 +182,8 @@ Existen 3 tipos:
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
 
 
-
-
-
 ## Blob Storage
-Es el tipo mas utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
+Es el tipo más utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
 
 ### Permisos de Acceso al Blob Storage
 
@@ -212,10 +202,10 @@ Existen 4 capas de acceso:
 Es posible intercambar entre capas
 - **Hot**(*Dentro de Blob Standard*): para acceder a los archivos de manera frecuente. Alto costo de almacenamiento es caro, bajo costo de acceso.
 - **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
-- **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la mas costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
+- **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
 
 
-## Trabajar a nivel de Codigo
+## Trabajar a nivel de Código
 
 Libreria cliente ```azure.storage.blob```
 
@@ -226,7 +216,6 @@ Por orden de llamada:
 3. **Blob Client**: para trabajar con archivos, permite eliminar, descargar, crear archivos dentro de un contenedor, que a su vez esta dentro de un Storage Account.
 4. **Append Blob Client**: para manipular archivos de tipo log.
 5. **Block Blob Client**: para trabajar con archivos de tipo bloque.
-
 
 
 # Module 04: Azure Cosmos DB storage
@@ -289,7 +278,7 @@ Permite guardar en un repositorio privado imagenes para utilizar en nuestra orga
 Ofrecen precios predecibles y varias opciones para alinearse con la capacidad y los patrones de uso de su registro de Docker privado:
 
 - **Básico**: optimizado para los costos para que los desarrolladores aprendan sobre Azure Container Registry. Los registros básicos tienen las mismas funcionalidades de programación que Estándar y Premium (como integración de la autenticación de Azure Active Directory, la eliminación de imágenes y webhooks).
-- **Estándar**: Mismas funcionalidades del nivel basico, pero con mas almacenamiento y mayor rendimiento en las imagenes. Ideal para la mayoria de necesidades en escenarios productivos.
+- **Estándar**: Mismas funcionalidades del nivel basico, pero con más almacenamiento y mayor rendimiento en las imagenes. Ideal para la mayoria de necesidades en escenarios productivos.
 - **Premiun**: Mayor cantidad de almacenamiento incluido y operaciones simultaneas, por lo que permiten trabajar con escenarios de mayor volumen. Agrega replicacion geografica, vinculo privado con puntos de conexion privados.
 
 ### Almacenamiento
@@ -332,7 +321,7 @@ es un script que contiene una serie de instrucciones que se usan para compilar u
 **WebHooks**
 
 ## Container Instances
-Permite trabajar con un contenedor o con una aplicación que esta contenida en varias aplicaciones(uso mas comun).
+Permite trabajar con un contenedor o con una aplicación que esta contenida en varias aplicaciones (uso más comun).
 
 - **Container Groups**: recurso de nivel superior de Azure Container Instances es el **grupo de contenedores**. Un grupo de contenedores es una colección de contenedores que se programan en la misma máquina host. Los contenedores de un grupo comparten un ciclo de vida, los recursos, la red local y los volúmenes de almacenamiento. Es similar en concepto a un pod en Kubernetes.
 
@@ -350,7 +339,7 @@ Permite trabajar con un contenedor o con una aplicación que esta contenida en v
 
 - **Escenarios frecuentes**: útiles en los casos en los que se quiere dividir una sola tarea funcional en varias imágenes de contenedor. Luego, estas imágenes las pueden entregar diferentes equipos y pueden tener diversos requisitos de recursos. Considerar a ```docker build``` o ```docker push``` para compilar e insertar una sola imagen de contenedor(sin instalacion local).
 
-## Comandos utilizados en CLiShell
+## Comandos utilizados en CliShell
 
 ``` az group create ``` para crear un grupo de recusos.
 ``` az container create ``` crea un contenedor.
@@ -391,7 +380,7 @@ Las arquitecturas de microservicios permiten desarrollar, actualizar, controlar 
 
 **Container App Envaironment**: ambiente donde se crean y ejecuta Container Apps.
 
-**Administración de Revisiones**: Una revisión es una instantánea inmutable de una versión de la aplicación de contenedor.`az containerapp update` para generar versiones, que permiten volver a revisiones anteriores, tambien se puede ejecutar 2 revisiones a la vez, hasta validar el funcionamiento de la nueva revision, y asi apagar la mas antigua. Puede controlar qué revisiones están activas y el tráfico externo que se dirige a cada revisión activa. Los nombres de revisión se usan para identificar una revisión, y en la URL de la revisión.
+**Administración de Revisiones**: Una revisión es una instantánea inmutable de una versión de la aplicación de contenedor.`az containerapp update` para generar versiones, que permiten volver a revisiones anteriores, tambien se puede ejecutar 2 revisiones a la vez, hasta validar el funcionamiento de la nueva revision, y asi apagar la más antigua. Puede controlar qué revisiones están activas y el tráfico externo que se dirige a cada revisión activa. Los nombres de revisión se usan para identificar una revisión, y en la URL de la revisión.
 
 ```az containerapp revision list``` : enumera todas las revisiones asociadas a la aplicación de contenedor.
 
@@ -479,7 +468,7 @@ Una Firma de acceso compartido (SAS) es un URI que concede derechos de acceso re
 
 Existen tres tipos de firmas de acceso compartido
 
-- **SAS de Delegación de Usuario**: la mas recomendable. se protege con las credenciales de Azure Active Directory y también por los permisos especificados para la SAS. Una SAS de delegación de usuarios solo se aplica a Blob Storage.
+- **SAS de Delegación de Usuario**: la más recomendable. se protege con las credenciales de Azure Active Directory y también por los permisos especificados para la SAS. Una SAS de delegación de usuarios solo se aplica a Blob Storage.
 - **SAS de Servicio**: se protege con la clave de cuenta de almacenamiento. Una SAS de servicio delega el acceso a un recurso en los servicios de Azure Storage siguientes: Blob Storage, Queue Storage, Table Storage o Azure Files.
 - **SAS de Cuenta**: se protege con la clave de cuenta de almacenamiento. Delega el acceso a los recursos en uno o varios de los servicios de almacenamiento.
 
@@ -741,7 +730,7 @@ Librería que permite la conexión con Redis y poder enviar comandos desde una a
 
 Usamos la dirección del host, el número de puerto y una clave de acceso para conectarse a un servidor de Redis.
 
-Ejemplo de coneccion:
+Ejemplo de conexión:
 
 ```c#
 //Creating a connection
@@ -758,7 +747,7 @@ var connectionString = ConnectionMu1tip1exer.Connect(connectionString);
 ## Develop for Storage on CDNs
 Los CDNs pueden ser aplicados en App Services y Storage Account.
 
-red de entrega de contenido (CDN) es una red distribuida de servidores que puede proporcionar contenido web a los usuarios de manera eficaz. Las redes CDN guardan contenido almacenado en caché en servidores perimetrales en ubicaciones de **puntos de presencia o Puntos de distribucion(POP)** que están cerca de los usuarios finales, para minimizar la latencia.
+red de entrega de contenido (CDN) es una red distribuida de servidores que puede proporcionar contenido web a los usuarios de manera eficaz. Las redes CDN guardan contenido almacenado en caché en servidores perimetrales en ubicaciones de **puntos de presencia o Puntos de distribución(POP)** que están cerca de los usuarios finales, para minimizar la latencia.
 
 ### Ventajas
 
