@@ -17,7 +17,6 @@ CI/CD
 * Local Git repository
 * And others
 
-**Ranuras de implementación**: Nos permiten crear las implementaciones en distintos ambientes sin tener que modificar las aplicaciones.
 
 ### App Service plan
 
@@ -61,7 +60,9 @@ El **escalado vertical** es otorgar más o menos recursos, implica para este cas
 En planes básicos el escalado es manual.
 
 ### Ranuras de implementación 
-Son aplicaciones activas con sus propios nombres de host. Los  elementos de contenido y configuraciones de aplicaciones se pueden intercambiar entre dos ranuras de implementación, incluida la ranura de producción. Puede implementar la aplicación en un entorno de ensayo y, a continuación, intercambiar los espacios de ensayo y producción.
+Son aplicaciones activas con sus propios nombres de host. Los elementos de contenido y configuraciones de aplicaciones se pueden intercambiar entre dos ranuras de implementación, incluida la ranura de producción. Puede implementar la aplicación en un entorno de ensayo y, a continuación, intercambiar los espacios de ensayo y producción. Nos permiten crear las implementaciones en distintos ambientes sin tener que modificar las aplicaciones.
+
+
 
 ### App Service Web App
 
@@ -82,6 +83,95 @@ Se admiten varios orígenes:
 - **Implementación desde un archivo Zip**: use `curl` o una utilidad HTTP similar para enviar un archivo ZIP de los archivos de la aplicación a App Service.
 - **FTP/S**: FTP o FTPS es una manera tradicional de insertar el código en muchos entornos de hospedaje, incluido App Service.
 
+
+# Registros de aplicaciones Web
+
+[Introducción - Training](https://learn.microsoft.com/es-mx/training/modules/capture-application-logs-app-service/1-introduction)
+
+Forma simple de capturar resultados del registro de aplicaciones básicos sin agregar un SDK especializado, como Azure Application Insights.
+
+## Registros de la aplicación
+
+Son el resultado de las instrucciones de seguimiento en tiempo de ejecución en el código de aplicación.
+
+Tiene limitaciones de escala, sobre todo porque se usan ***archivos***  para guardar los resultados registrados. Si tiene varias instancias de una aplicación y se comparte el mismo almacenamiento en todas ellas, es posible que se intercalen mensajes procedentes de distintas instancias,  lo que dificulta la solución de problemas.
+
+### ASP.NET
+
+Para registrar información en el registro de diagnóstico de aplicaciones, use la clase `System.Diagnostics.Trace`. Existen cuatro niveles de seguimiento que se pueden usar, y que se corresponden con los niveles de registro `error`, `warning`, `information` y `verbose` que se muestran en Azure Portal:
+
+- Trace.TraceError("Message"); *// Escribe un mensaje de error*
+- Trace.TraceWarning("Message"); *// Escribe un mensaje de advertencia*
+- Trace.TraceInformation("Message"); *// Escribe un mensaje de carácter informativo*
+- Trace.WriteLine("Message"); *// Escribe un mensaje detallado*
+
+### Aplicaciones ASP.NET Core
+
+se pueden ejecutar tanto en Windows como en Linux. Para registrar información en los registros de la aplicación de Azure, use la clase **LoggerFactory** y, después, use uno de los seis niveles de registro disponibles:
+
+- logger.LogCritical("Mensaje"); *// Escribe un mensaje crítico en el nivel de registro 5*
+- logger.LogError("Mensaje"); *// Escribe un mensaje de error en el nivel de registro 4*
+- logger.LogWarning("Mensaje"); *// Escribe un mensaje de advertencia en el nivel de registro 3*
+- logger.LogInformation("Mensaje"); *// Escribe un mensaje de carácter informativo en el nivel de registro 2*
+- logger.LogDebug("Message"); *// Escribe un mensaje de depuración en el nivel de registro 1*
+- logger.LogTrace("Mensaje"); *// Escribe un mensaje de seguimiento detallado en el nivel de registro 0*
+
+En el caso de las aplicaciones ASP.NET Core en Windows, estos mensajes se relacionan con los filtros de Azure Portal del siguiente 
+modo:
+
+- Los niveles 4 y 5 son mensajes de "error".
+- El nivel 3 es un mensaje de "advertencia".
+- El nivel 2 es un mensaje de "carácter informativo".
+- Los niveles 0 y 1 son mensajes "detallados".
+
+En cuanto a las aplicaciones ASP.NET Core en Linux, solo se registran los mensajes de "error" (es decir, los niveles 4 y 5).
+
+## **Aplicaciones Node.js**
+
+aplicaciones web basadas en scripts, como las aplicaciones Node.js en Windows o Linux, el registro de aplicaciones se habilita con el método **console()**:
+
+- console.error("Message"): escribe un mensaje en STDERR
+- console.log("Message"): escribe un mensaje en STDOUT
+
+Ambos tipos de mensaje se escriben en los registros de nivel de error de Azure App Service.
+
+En la siguiente tabla se resume la compatibilidad de registro en los hosts y entornos de aplicaciones más conocidos.
+
+| Entorno de la aplicación | Host | Niveles de registro | Ubicación de almacenamiento |
+| --- | --- | --- | --- |
+| ASP.NET | Windows | Error, Advertencia, Información, Detallado | Sistema de archivos, Blob Storage |
+| ASP.NET Core | Windows | Error, Advertencia, Información, Detallado | Sistema de archivos, Blob Storage |
+| ASP.NET Core | Linux | Error | Sistema de archivos |
+| Node.js | Windows | Error (STDERR), Información (STDOUT), Advertencia, Detallado | Sistema de archivos, Blob Storage |
+| Node.js | Linux | Error | Sistema de archivos |
+| Java | Linux | Error | Sistema de archivos |
+
+## **Alternativas a los diagnósticos de aplicaciones**
+
+Azure Application Insights es una extensión de sitio que proporciona más características de supervisión de rendimiento (como datos detallados sobre el uso y el rendimiento), y está pensada para usarse en implementaciones de aplicaciones de producción, además de estar considerada una herramienta de desarrollo útil.  Para usar Application Insights hay que incluir código específico dentro de la aplicación mediante el SDK de App Insights. Application Insights también es un servicio facturable, de modo que, dependiendo de la escala de las implementaciones de aplicaciones y de los datos recopilados, puede que haya que hacer una previsión de costes periódicos.
+
+## Azure Cli
+
+Para abrir el flujo de registro,
+
+```powershell
+az webapp log tail --name <app name> --resource-group <resource group name>
+```
+
+Crear un conjunto de credenciales de nivel de usuario
+
+```powershell
+az webapp deployment user set --user-name <name-of-user-to create> --password <new-password>
+```
+
+Abrir el flujo de registro
+
+```powershell
+curl -u {username} https://{sitename}.scm.azurewebsites.net/api/logstream
+```
+
+Para descargar archivos de registro del sistema de archivos
+
 ### Autenticación y Autorización
 Funcionalidad de App Service, implementación sencilla, que requiere de autenticación. 
 Marcos web incluidos:
@@ -98,7 +188,19 @@ Dentro de App Service hay dos implementaciones principales
 
 
 # Module 02: Implementando Azure Functions
-ℹ️ Durable Functions Deprecada
+
+## Durable Functions 
+Extensión de Azure Functions que permite escribir funciones con estado en un entorno de proceso sin servidor. La extensión permite definir flujos de trabajo con estado mediante la escritura de funciones del orquestador y entidades con estado mediante la escritura de funciones de entidad con el modelo de programación de Azure Functions. 
+
+### Patones utilizados
+
+- **Patrón nº 1: Encadenamiento de funciones** una secuencia de funciones se ejecuta en un orden específico. La salida de una función se aplica a la entrada de otra función. 
+- **Patrón nº 2: Distribución ramificada de salida y de entrada** se ejecutan en paralelo varias funciones y después se espera a que todas finalicen. 
+- **Patrón nº 3: Las API de HTTP asincrónico** soluciona el problema de coordinar el estado de las operaciones de larga duración con los clientes externos.
+- **Patrón 4: Supervisión** proceso flexible y periódico en un flujo de trabajo, hasta que se cumplen condiciones específicas. Puede usarse cuando se necesita que una API externa modifique su valor de retorno.
+- **Patrón nº 5: Interacción humana** Un proceso de aprobación es un ejemplo de un proceso empresarial que implica la interacción humana.
+- **Patrón 6: Agregador (entidades con estado)** trata de agregar datos de eventos durante un período de tiempo en una solaentidad direccionable. En este patrón, los datos que se agreguen pueden proceder de varios orígenes. Es posible que el agregador tome medidas según datos de eventos a medida que llegan, y puede que los clientes externos necesiten consultar los datos agregados.
+
 
 ## Azure Functions 
 Código de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
@@ -125,6 +227,7 @@ El tiempo puede ser mayor en planes Premium y Dedicados donde por defecto tienen
 
 ### Cuenta de almacenamiento
 Al crear una Function App, <mark>SIEMPRE</mark> se debe crear un Storage Account de uso general, ya que las funciones guardan logs de estados.
+Se permiten hasta 3 copias en zona redundante en la zona primaria.
 
 ### Controlador de escalado
 O Scale Controller (solo para Premium y Por consumo), automáticamente monitorea (revisa la cola de request de) las funciones y determina cual requiere más recursos(instancias) para atender las peticiones, a medida que disminuyen las peticiones, va realizando el desescalaiento.
@@ -132,6 +235,17 @@ O Scale Controller (solo para Premium y Por consumo), automáticamente monitorea
 El máximo (y por defecto) de instancias que se puede escalar es de 200 instancias. Es posible definirle un número menor en el archivo de configuración.
 
 Se debe considerar que las Function App, deben desescalar a todas las funciones contenidas, por lo que se debe considerar que si una función convienen colocarla aislada de otras funciones.
+
+### Controles Personalizados
+Los controladores personalizados son servidores web ligeros que reciben eventos del host de Functions. Cualquier lenguaje que admita primitivas de HTTP puede implementar un controlador personalizado.
+
+Los controladores personalizados son más adecuados para las situaciones en las que desea:
+
+* Implemente una aplicación de funciones en un lenguaje que actualmente no se ofrece de manera inmediata, como Go o Rust.
+* Implemente una aplicación de funciones en un runtime que actualmente no se incluye de manera predeterminada, como Deno.
+
+### Trigger
+CRON utiliza un formato de "{segundo} {minuto} {hora} {día} {mes} {día de la semana}" para las expresiones. El primer "0" significa que corre cuando el segundo es igual a 0. El segundo "15,30,45" significa cuando los minutos son igual a 15, 30 y 45. El tercer "0" significa a la medianoche. Así que la respuesta es a las 12:15, 12:30 y 12:45 todos los días. 
 
 ### Resumen
 La función tiene dos componentes principales, la función (en un lenguaje determinado, por ejemplo, c#)
@@ -150,7 +264,7 @@ Los binding pueden ser:
 # Module 03: Blob storage
 
 ## Blob Storage
-Solución de almacenamiento de objetos. Está optimizado para el almacenamiento de cantidades masivas de datos no estructurados. Cuenta con varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage.
+Solución de almacenamiento de objetos. Está optimizado para el almacenamiento de cantidades masivas de datos no estructurados. Cuenta con varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage. Es el tipo más utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
 
 Ofrece dos niveles de rendimiento de cuentas de almacenamiento, *estándar* y *premium*.
 
@@ -160,30 +274,15 @@ Dentro del nivel ***Standard***: Cuenta con:
 **Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
 
 - **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser más efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
-    - blobs en bloques,
-    - blobs en páginas o
-    - recursos compartidos de archivos.
+    - **blobs en bloques**: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
+    - **blobs en páginas**: utilizados para guardar discos(no administrados) de maquinas virtuales.
+    - **recursos compartidos de archivos**: similar a File server(SMB)
 
-
-- Block Blobs: Blog Storage (Imagenes, videos, sonidos, dosc)
-- Page Blobs: Solamente Page Blob (Imagenes de disco de maquinas virtuales)
-- File Share: similar a File server(SMB)
-**Blobs**: para guardar archivos (imagenes, videos, documentos), existen varios tipo de Blogs.
-Existen 3 tipos:
-
-- Blob: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
-
-- Page: utilizados para guardar discos(no administrados) de maquinas virtuales.
-
-- Append: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora información a la ya existente.
+**Append**: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora información a la ya existente.
 
 **Tables**: Base de datos NoSQL, para guardar información de tipo llave:valor. Escalan dinaicamente, son de respuesta rapidas, siempre y cuando la información que se almacene sea especifica, como ser configuracions.
 
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
-
-
-## Blob Storage
-Es el tipo más utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
 
 ### Permisos de Acceso al Blob Storage
 
@@ -203,6 +302,9 @@ Es posible intercambar entre capas
 - **Hot**(*Dentro de Blob Standard*): para acceder a los archivos de manera frecuente. Alto costo de almacenamiento es caro, bajo costo de acceso.
 - **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
 - **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
+
+### Azure File Sync
+Permite mantener copia locales de archivos al mismo tiempo que en la nube. Utiliza protocolos como SMV, NFS, FTPS.
 
 
 ## Trabajar a nivel de Código
@@ -246,12 +348,12 @@ Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo t
 
 Azure Cosmos DB ofrece varias API de base de datos, entre las que se incluyen las siguientes:
 
-- Azure Cosmos DB para NoSQL
-- Azure Cosmos DB for MongoDB
-- Azure Cosmos DB para PostgreSQL
-- Azure Cosmos DB for Apache Cassandra
-- Azure Cosmos DB for Table
-- Azure Cosmos DB for Apache Gremlin
+- **Azure Cosmos DB para NoSQL** almacena datos en formato de documento, permiten realizar consultas mediante la sintaxis del Lenguaje de consulta estructurado (SQL).
+- **Azure Cosmos DB for MongoDB** almacena los datos en una estructura de documentos a través del formato BSON.
+- **Azure Cosmos DB para PostgreSQL** Almacena datos en un único nodo o distribuidos en una configuración de varios nodos.
+- **Azure Cosmos DB for Apache Cassandra** almacena los datos en el esquema orientado a columnas, escalado horizontal y altamente distribuido para almacenar grandes volúmenes de datos
+- **Azure Cosmos DB for Table** almacena datos en formato clave-valor.
+- **Azure Cosmos DB for Apache Gremlin** permite a los usuarios realizar consultas de grafos y almacenar datos como bordes y vértices.
 
 ### Unidades de solicitud
 Azure Cosmos DB normaliza el costo de todas las operaciones de base de datos y este se expresa en unidades de solicitud (o RU, para abreviar). Una unidad de solicitud representa los recursos del sistema, como CPU e IOPS, y la memoria que se necesitan para realizar las operaciones de base de datos
@@ -281,6 +383,12 @@ Ofrecen precios predecibles y varias opciones para alinearse con la capacidad y 
 - **Estándar**: Mismas funcionalidades del nivel basico, pero con más almacenamiento y mayor rendimiento en las imagenes. Ideal para la mayoria de necesidades en escenarios productivos.
 - **Premiun**: Mayor cantidad de almacenamiento incluido y operaciones simultaneas, por lo que permiten trabajar con escenarios de mayor volumen. Agrega replicacion geografica, vinculo privado con puntos de conexion privados.
 
+### Procedimientos recomendados 
+- **Implementación cercana a la red**: Cree el registro de contenedor en la misma región de Azure en la que implementa los contenedores.
+- **Replicación geográfica en varias regiones** Permite minimizar la latencia mediante la replicación geográfica del registro. ambién puede configurar **webhooks** regionales para que le envíen notificaciones cuando se produzcan eventos en réplicas concretas, como cuando se insertan imágenes.
+- **Espacios de nombres del repositorio**: puede permitir el uso compartido de un registro único en varios grupos de su organización. Azure Container Registry admite espacios de nombres anidados, lo que permite el aislamiento del grupo.
+
+
 ### Almacenamiento
 ya sea Básico, Estándar o Premium, se gozan de características avanzadas:
 
@@ -297,8 +405,17 @@ ya sea Básico, Estándar o Premium, se gozan de características avanzadas:
 
 Escenarios de uso: 
 
-**Tarea rapida**: compile e inserte una sola imagen de contenedor en un registro de contenedor a petición en Azure, sin tener que realizar una instalación local del motor de Docker. Considere que ` docker build `, es ` docker push ` en la nube.
+**Tarea rapida**: compile e inserte una sola imagen de contenedor en un registro de contenedor a petición en Azure, sin tener que realizar una instalación local del motor de Docker. 
 
+Para compilar una imagen de contenedor desde el código de ejemplo.
+```
+az acr build --registry $ACR_NAME --image helloacrtasks:v1 .
+```
+
+Para crear un almacen de claves
+```
+az keyvault create --resource-group $RES_GROUP --name $AKV_NAME
+```
 
 **Tareas desencadenadas automáticamente**: habilite uno o varios desencadenadores para compilar una imagen:
 
@@ -463,14 +580,14 @@ es posible adquirir un token desde muchos tipos de aplicación: aplicaciones web
 
 **Aplicaciones cliente confidenciales**: se ejecutan en servidores (aplicaciones web, aplicaciones de API web o incluso aplicaciones de servicio o demonio). Se consideran de acceso difícil pueden mantener un secreto de aplicación.
 
-## Firmas compartidas
-Una Firma de acceso compartido (SAS) es un URI que concede derechos de acceso restringidos a recursos de Azure Storage.
+## Firmas compartidas / Identidad Administrada
+Una Firma de acceso compartido (SAS) es un URI que concede derechos de acceso restringidos a recursos de Azure Storage. Eliminan la necesidad de administrar las credenciales para los desarrolladores. 
 
 Existen tres tipos de firmas de acceso compartido
 
 - **SAS de Delegación de Usuario**: la más recomendable. se protege con las credenciales de Azure Active Directory y también por los permisos especificados para la SAS. Una SAS de delegación de usuarios solo se aplica a Blob Storage.
 - **SAS de Servicio**: se protege con la clave de cuenta de almacenamiento. Una SAS de servicio delega el acceso a un recurso en los servicios de Azure Storage siguientes: Blob Storage, Queue Storage, Table Storage o Azure Files.
-- **SAS de Cuenta**: se protege con la clave de cuenta de almacenamiento. Delega el acceso a los recursos en uno o varios de los servicios de almacenamiento.
+- **SAS de Cuenta**: se protege con la clave de cuenta de almacenamiento. Delega el acceso a los recursos en uno o varios de los servicios de almacenamiento. Proporcionan una identidad administrada automáticamente en Azure Active Directory (Azure AD) para que las aplicaciones la utilicen al conectarse a los recursos que admiten la autenticación de Azure AD. Las aplicaciones pueden usar identidades administradas para obtener tokens de Azure AD sin necesidad de administrar credenciales.
 
 
 ## Microsoft Graph
@@ -566,7 +683,7 @@ La puerta de enlace de API Management (también denominada plano de datos o tiem
 - **Administrada**: es el componente de puerta de enlace predeterminado que se implementa en Azure para cada instancia de API Management en cada nivel de servicio. Todo el tráfico de API fluye a través de Azure, independientemente de dónde se hospeden los back-end que implementan las API.
 - **Autohospedada** : versión opcional y en contenedores de la puerta de enlace administrada predeterminada. Útil para escenarios híbridos y de varias nubes en los que es necesario ejecutar las puertas de enlace fuera de Azure en los mismos entornos donde se hospedan los back-end de API.
 
-### Directivas
+### Directivas / Politicas
 Permiten al publicador cambiar el comportamiento de la API a través de la configuración. Las directivas son una colección de declaraciones que se ejecutan secuencialmente en la solicitud o respuesta de una API. Se aplican en la puerta de enlace que se encuentra entre el consumidor de la API y la API administrada. La puerta de enlace recibe todas las solicitudes y normalmente las reenvía sin modificar a la API subyacente. Una directiva puede aplicar cambios a la solicitud de entrada y a la respuesta de salida.
 
 ### Directivas Avanzadas
@@ -605,6 +722,8 @@ Cinco conceptos fundamentales:
 ## Event Hub
 Servicio de gestión de (**muchos**) eventos por segundo. Con un flujo de eventos constantes. Permitiendo manejar grandes volúmenes de información de eventos.
 Se utiliza para hacer analítica de Data en tiempo real.
+La velocidad de un centro de eventos de Azure está determinada por la cantidad de unidades de rendimiento que reserva para él. Puede establecer entre 1 y 20 unidades de rendimiento para Event Hub.
+**1 unidad de rendimiento** para los datos que ingresan a un centro de eventos representa 1 MB por segundo o 1000 eventos por segundo (lo que ocurra primero)
 
 
 # Module 10: Soluciones basadas en mensajes
@@ -626,6 +745,7 @@ Existen dos servicios:
   + Soportan hasta 80 GB de mensajes en una misma cola
 
 ## Azure Service bus
+Service Bus Queue es una cola de mensajes de nivel empresarial.
 
 ### Componentes
 - Queues: FIFO
@@ -771,4 +891,33 @@ permite autorizar o bloquear contenido en países o regiones específicos, segú
 - Verizon
 
 
+# Maquinas virtuales
+El uso de **Azure Spot Virtual Machines** le permite aprovechar nuestra capacidad no utilizada con un ahorro de costos significativo. En cualquier momento en que Azure necesite recuperar la capacidad, la infraestructura de Azure expulsará las máquinas virtuales al contado de Azure. Por lo tanto, Azure Spot Virtual Machines es ideal para cargas de trabajo que pueden manejar interrupciones como trabajos de procesamiento por lotes, entornos de desarrollo/prueba, grandes cargas de trabajo de cómputo y más. Consulte el documento de Microsoft
+
+# Plantillas de Resource Manager
+Para implementar repetidamente sus soluciones en la nube y saber que su infraestructura se encuentra en un estado confiable. Puede automatizar las implementaciones y usar la práctica de infraestructura como código. En el código, debe definir la infraestructura que va a implementar. Así pues, el código de infraestructura se convierte en parte del proyecto. Al igual que el código de la aplicación, puede almacenar el código de infraestructura en un repositorio de origen y agregarle un número de versión. 
+
+Para implementar la infraestructura como código para las soluciones de Azure, use las plantillas de Azure Resource Manager (plantillas de ARM). La plantilla es un archivo de notación de objetos JavaScript (JSON) que contiene la infraestructura y la configuración del proyecto. La plantilla usa sintaxis declarativa, lo que permite establecer lo que pretende implementar sin tener que escribir la secuencia de comandos de programación para crearla. En la plantilla se especifican los recursos que se van a implementar y las propiedades de esos recursos.
+
+## Caracteristicas:
+
+- **Sintaxis declarativa**: permiten crear e implementar una infraestructura de Azure completa de forma declarativa.
+- **Resultados repetibles**: puede implementar la misma plantilla varias veces y obtener los mismos tipos de recursos en el mismo estado.
+- **Orquestación**: Resource Manager se encarga de gestionar la implementación de recursos interdependientes para que se creen en el orden correcto. 
+
+## Archivo de plantilla
+
+Dentro de la plantilla, puede escribir expresiones de plantilla que aumentan las capacidades de JSON. Estas expresiones hacen uso de las funciones que proporciona Resource Manager.
+
+La plantilla contiene las secciones siguientes:
+
+- **Parámetros**: proporcione valores durante la implementación que permitan usar la misma plantilla con entornos diferentes.
+
+- **Variables**: defina los valores que se reutilizan en las plantillas. Se pueden crear a partir de valores de parámetro.
+
+- **Funciones definidas por el usuario**: cree funciones personalizadas que simplifiquen la plantilla.
+
+- **Recursos**: especifique los recursos que se van a implementar.
+
+- **Salidas**: devuelva valores de los recursos implementados.
 
