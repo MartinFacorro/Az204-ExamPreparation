@@ -303,8 +303,62 @@ Es posible intercambar entre capas
 - **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
 - **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
 
+
+### Detección de directivas de ciclo de vida de Blob Storage
+Colección de reglas en un documento JSON. Cada definición de regla incluye un conjunto de filtros y un conjunto de acciones.
+
+
+```JSON
+{
+  "rules": [
+    {
+      "name": "rule1",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {...}
+    },
+    {
+      "name": "rule2",
+      "type": "Lifecycle",
+      "definition": {...}
+    }
+  ]
+}
+```
+
+**rules**: Se requiere al menos una regla en una directiva. Puede definir hasta 100 reglas en una directiva.
+
+**name**: String Un nombre de regla puede incluir hasta 256 caracteres alfanuméricos. El nombre de regla  distingue mayúsculas de minúsculas. Debe ser único  dentro de una directiva. True
+**enabled**: Boolean Un valor booleano opcional para permitir que una regla se deshabilite de forma temporal. El valor predeterminado es true si no se establece. False
+**type**: Un valor de enumeración.El tipo válido actual es Ciclo de vida. True
+**definition** 	Un objeto que define la regla del ciclo de vida Cada definición se compone de un conjunto de filtros y un conjunto de acciones. True
+
+### Acciones de regla
+Las acciones se aplican a los blobs filtrados cuando se cumple la condición de ejecución.
+
+**Acción**:
+
+- **tierToCool** Compatible con blockBlob
+- **enableAutoTierToHotFromCool** Compatible con blockBlob
+- **tierToArchive**: 	Compatible con blockBlob
+**delete**Compatible con blockBlob y appendBlob
+
+
+Para agregar una directiva de administración del ciclo de vida con la CLI de Azure, escriba la directiva en un archivo JSON y, después, llame al comando ```az storage account management-policy create``` para crear la directiva.
+
+
 ### Azure File Sync
 Permite mantener copia locales de archivos al mismo tiempo que en la nube. Utiliza protocolos como SMV, NFS, FTPS.
+
+### Rehidratación de blob desde el nivel de archivo
+Un blob se encuentra en el nivel de acceso de archivo, se considera que está sin conexión. Para leer o modificar los datos de un blob archivado, primero debe rehidratar el blob en un nivel en línea, ya sea el nivel de acceso frecuente o esporádico. Hay dos opciones para rehidratar un blob que se almacena en el nivel de archivo:
+
+- **Copiar un blob archivado en un nivel en línea
+** ```Copy blob```
+- **Cambio del nivel de acceso de un blob a un nivel en línea** ```Set Blob Tier```
+
+#### Prioridad 
+puede establecer la prioridad de la operación de rehidratación a través del encabezado ```x-ms-rehydrate-priority ```
 
 
 ## Trabajar a nivel de Código
@@ -319,12 +373,61 @@ Por orden de llamada:
 4. **Append Blob Client**: para manipular archivos de tipo log.
 5. **Block Blob Client**: para trabajar con archivos de tipo bloque.
 
+### Operaciones con metadatos
+
+Los metadatos de un recurso de blob o de un recurso contenedor se pueden recuperar o establecer directamente, sin devolver ni modificar el contenido del recurso.
+
+**Recuperación de propiedades y metadatos** 
+
+```GET/HEAD```
+
+**Establecer encabezados de metadatos**
+
+```PUT ```
+
+
+### Propiedades HTTP estándar para contenedores y blobs
+
+Los nombres de los encabezados de metadatos están formados por el prefijo de encabezado ```x-ms-meta-``` y un nombre personalizado.
+
+
+Los nombres de propiedades utilizan nombres de encabezado HTTP estándar HTTP/1.1
+
+Los encabezados HTTP estándar admitidos en los contenedores son los siguientes:
+
+- `ETag`
+- `Last-Modified`
+
+Los encabezados HTTP estándar admitidos en los contenedores son los blobs:
+
+- `ETag`
+- `Last-Modified`
+- `Content-Length`
+- `Content-Type`
+- `Content-MD5`
+- `Content-Encoding`
+- `Content-Language`
+- `Cache-Control`
+- `Origin`
+- `Range`
+
+
 
 # Module 04: Azure Cosmos DB storage
 
 Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener múltiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
 
 **Consistencia**: se refiere a la consistencia de la información en cada replica. Esto afecta directamente a la performance.
+
+Azure Cosmos DB ofrece cinco niveles bien definidos. De más fuerte a más débil, los niveles son:
+
+- **Fuerte**:  capacidad de servir solicitudes simultáneamente. Se garantiza que las lecturas devuelven la versión más reciente de un elemento. 
+- **Uso vinculado**: 
+- **Sesión**: as escrituras se replican en un mínimo de tres réplicas (en un conjunto de cuatro réplicas) en la región local, con replicación asincrónica en todas las demás regiones.
+- **Prefijo coherente**: la escritura se realiza en lotes separados. Solo al leer el lote en conjunto se obtiene la coherencia completa.
+- **Ocasional**: 
+
+
 
 **Baja latencia**: tanto para escritura como para lectura, hay  una respuesta menor a los 10ms en el 99% de los casos. 
 
@@ -745,6 +848,7 @@ Existen dos servicios:
   + Soportan hasta 80 GB de mensajes en una misma cola
 
 ## Azure Service bus
+Service Bus Queue es una cola de mensajes de nivel empresarial.
 
 ### Componentes
 - Queues: FIFO

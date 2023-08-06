@@ -1,4 +1,5 @@
-AZ-204 
+# **AZ-204**
+
 # Module 01: Crear Azure App Service web apps
 ## Implementar Azure App Service Web Apps
 
@@ -8,7 +9,7 @@ Servicio basado en HTTP, donde podemos alojar aplicaciones web, RestAPI, BackEnd
 
 Escalación y Des escalación automática.
 
-CI/CD
+**CI/CD**
 
 * Azure DevOps
 * GitHub
@@ -23,11 +24,12 @@ CI/CD
 Servicio computacional (por debajo), con diferentes planes. (Servicio de cómputo + Características). Es un recurso que se utiliza para alojar las App Services (siempre debe existir este recurso para alojar apps)
 
 App Service Plan, se miden para calcular el costo:
- - CPU
- - Memoria
- - Disco
- - Funcionalidad
- 
+
+- CPU
+- Memoria
+- Disco
+- Funcionalidad
+
 Por cada ASP se pueden crear tantas aplicaciones como el plan permita.
 
 Cada plan de App Service define:
@@ -46,7 +48,6 @@ El **plan de tarifa** de un plan de App Service determina qué características 
 - **Dedicated compute (Proceso dedicado)**: (Básico, Estándar, Premium, PremiumV2 y PremiumV3) las aplicaciones se ejecutan en recursos dedicados, las aplicaciones del mismo plan comparten recursos.
 - **Aislado**: (Aislado y AisladoV2) proporciona aislamiento de red, y aislamiento de procesos. Máximas posibilidades de escalabilidad horizontal.
 
-
 **Redundancia por zona**: cuando un data center se cae, dentro de la misma zona, se utilizan otros data centers.
 
 ### Escalamiento
@@ -61,8 +62,6 @@ En planes básicos el escalado es manual.
 
 ### Ranuras de implementación 
 Son aplicaciones activas con sus propios nombres de host. Los elementos de contenido y configuraciones de aplicaciones se pueden intercambiar entre dos ranuras de implementación, incluida la ranura de producción. Puede implementar la aplicación en un entorno de ensayo y, a continuación, intercambiar los espacios de ensayo y producción. Nos permiten crear las implementaciones en distintos ambientes sin tener que modificar las aplicaciones.
-
-
 
 ### App Service Web App
 
@@ -83,14 +82,11 @@ Se admiten varios orígenes:
 - **Implementación desde un archivo Zip**: use `curl` o una utilidad HTTP similar para enviar un archivo ZIP de los archivos de la aplicación a App Service.
 - **FTP/S**: FTP o FTPS es una manera tradicional de insertar el código en muchos entornos de hospedaje, incluido App Service.
 
-
-# Registros de aplicaciones Web
+## Registros de aplicaciones Web
 
 [Introducción - Training](https://learn.microsoft.com/es-mx/training/modules/capture-application-logs-app-service/1-introduction)
 
 Forma simple de capturar resultados del registro de aplicaciones básicos sin agregar un SDK especializado, como Azure Application Insights.
-
-## Registros de la aplicación
 
 Son el resultado de las instrucciones de seguimiento en tiempo de ejecución en el código de aplicación.
 
@@ -186,7 +182,6 @@ Dentro de App Service hay dos implementaciones principales
 - **Multi-tenant**: Multi inquilino, muchos clientes diferentes en la misma unidad de escalado.
 - **Single-Tentant** App Service Environment (ASE) de un único inquilino
 
-
 # Module 02: Implementando Azure Functions
 
 ## Durable Functions 
@@ -201,7 +196,6 @@ Extensión de Azure Functions que permite escribir funciones con estado en un en
 - **Patrón nº 5: Interacción humana** Un proceso de aprobación es un ejemplo de un proceso empresarial que implica la interacción humana.
 - **Patrón 6: Agregador (entidades con estado)** trata de agregar datos de eventos durante un período de tiempo en una solaentidad direccionable. En este patrón, los datos que se agreguen pueden proceder de varios orígenes. Es posible que el agregador tome medidas según datos de eventos a medida que llegan, y puede que los clientes externos necesiten consultar los datos agregados.
 
-
 ## Azure Functions 
 Código de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
 [Azure Function como núcleo de servicios](/Resource/Module02/AzureFunctions.png)
@@ -209,9 +203,10 @@ Código de diferentes lenguajes) para que se ejecuten en determinado momento. Re
 Se puede desarrollar local y luego subirlo dentro de un Function App. Se usan para ejecutar en un periodo muy corto de tiempo.
 
 Existe 3 planes(hosting) indica el tamaño de la VM, como escala y desescala:
-	- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, Microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un Request, se levanta el servicio y responde (lo que hace más lenta la  respuesta)
-	- **Premiun**: se puede elegir (en máquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen precalentadas (Always On siempre encendido), ya que se paga un precio fijo.
-	- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado (se usan reglas), Always On/Off, precio fijo.
+
+- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, Microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un Request, se levanta el servicio y responde (lo que hace más lenta la  respuesta)
+- **Premiun**: se puede elegir (en máquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen precalentadas (Always On siempre encendido), ya que se paga un precio fijo.
+- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado (se usan reglas), Always On/Off, precio fijo.
 
 Los planes antes mencionados (Consumo, Premium, Dedicado) son los principales.
 
@@ -220,7 +215,6 @@ También existen 2 planes más de hospedaje:
 - **Azure App Service Environment**: o (ASE) entorno completamente aislado y dedicado para ejecutar de forma segura aplicaciones a gran escala.
 - **Kubernetes**: (Directo o Azure Arc) entorno aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes.
 
-	
 ### Time Out
 Por defecto es de 5 minutos, y como máximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
 El tiempo puede ser mayor en planes Premium y Dedicados donde por defecto tienen definido 302 minutos.
@@ -259,8 +253,6 @@ Los binding pueden ser:
  - OUT
  - IN/OUT
 
-
-
 # Module 03: Blob storage
 
 ## Blob Storage
@@ -274,9 +266,10 @@ Dentro del nivel ***Standard***: Cuenta con:
 **Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
 
 - **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser más efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
-    - **blobs en bloques**: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
-    - **blobs en páginas**: utilizados para guardar discos(no administrados) de maquinas virtuales.
-    - **recursos compartidos de archivos**: similar a File server(SMB)
+
+  - **blobs en bloques**: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
+  - **blobs en páginas**: utilizados para guardar discos(no administrados) de maquinas virtuales.
+  - **recursos compartidos de archivos**: similar a File server(SMB)
 
 **Append**: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora información a la ya existente.
 
@@ -303,9 +296,59 @@ Es posible intercambar entre capas
 - **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
 - **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
 
+
+### Detección de directivas de ciclo de vida de Blob Storage
+Colección de reglas en un documento JSON. Cada definición de regla incluye un conjunto de filtros y un conjunto de acciones.
+
+
+```JSON
+{
+  "rules": [
+    {
+      "name": "rule1",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {...}
+    },
+    {
+      "name": "rule2",
+      "type": "Lifecycle",
+      "definition": {...}
+    }
+  ]
+}
+```
+
+**rules**: Se requiere al menos una regla en una directiva. Puede definir hasta 100 reglas en una directiva.
+
+**name**: String Un nombre de regla puede incluir hasta 256 caracteres alfanuméricos. El nombre de regla  distingue mayúsculas de minúsculas. Debe ser único  dentro de una directiva. True
+**enabled**: Boolean Un valor booleano opcional para permitir que una regla se deshabilite de forma temporal. El valor predeterminado es true si no se establece. False
+**type**: Un valor de enumeración.El tipo válido actual es Ciclo de vida. True
+**definition** Un objeto que define la regla del ciclo de vida Cada definición se compone de un conjunto de filtros y un conjunto de acciones. True
+
+### Acciones de regla
+Las acciones se aplican a los blobs filtrados cuando se cumple la condición de ejecución.
+
+**Acción**:
+
+- **tierToCool** Compatible con blockBlob
+- **enableAutoTierToHotFromCool** Compatible con blockBlob
+- **tierToArchive**: 	Compatible con blockBlob
+**delete**Compatible con blockBlob y appendBlob
+
+Para agregar una directiva de administración del ciclo de vida con la CLI de Azure, escriba la directiva en un archivo JSON y, después, llame al comando ```az storage account management-policy create``` para crear la directiva.
+
 ### Azure File Sync
 Permite mantener copia locales de archivos al mismo tiempo que en la nube. Utiliza protocolos como SMV, NFS, FTPS.
 
+### Rehidratación de blob desde el nivel de archivo
+Un blob se encuentra en el nivel de acceso de archivo, se considera que está sin conexión. Para leer o modificar los datos de un blob archivado, primero debe rehidratar el blob en un nivel en línea, ya sea el nivel de acceso frecuente o esporádico. Hay dos opciones para rehidratar un blob que se almacena en el nivel de archivo:
+
+- **Copiar un blob archivado en un nivel en línea** ```Copy blob```
+- **Cambio del nivel de acceso de un blob a un nivel en línea** ```Set Blob Tier```
+
+#### Prioridad
+Puede establecer la prioridad de la operación de rehidratación a través del encabezado ```x-ms-rehydrate-priority ```
 
 ## Trabajar a nivel de Código
 
@@ -319,12 +362,57 @@ Por orden de llamada:
 4. **Append Blob Client**: para manipular archivos de tipo log.
 5. **Block Blob Client**: para trabajar con archivos de tipo bloque.
 
+### Operaciones con metadatos
+
+Los metadatos de un recurso de blob o de un recurso contenedor se pueden recuperar o establecer directamente, sin devolver ni modificar el contenido del recurso.
+
+**Recuperación de propiedades y metadatos** 
+
+```GET/HEAD```
+
+**Establecer encabezados de metadatos**
+
+```PUT ```
+
+
+### Propiedades HTTP estándar para contenedores y blobs
+
+Los nombres de los encabezados de metadatos están formados por el prefijo de encabezado ```x-ms-meta-``` y un nombre personalizado.
+
+Los nombres de propiedades utilizan nombres de encabezado HTTP estándar HTTP/1.1
+
+Los encabezados HTTP estándar admitidos en los contenedores son los siguientes:
+
+- `ETag`
+- `Last-Modified`
+
+Los encabezados HTTP estándar admitidos en los contenedores son los blobs:
+
+- `ETag`
+- `Last-Modified`
+- `Content-Length`
+- `Content-Type`
+- `Content-MD5`
+- `Content-Encoding`
+- `Content-Language`
+- `Cache-Control`
+- `Origin`
+- `Range`
+
 
 # Module 04: Azure Cosmos DB storage
 
 Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener múltiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
 
 **Consistencia**: se refiere a la consistencia de la información en cada replica. Esto afecta directamente a la performance.
+
+Azure Cosmos DB ofrece cinco niveles bien definidos. De más fuerte a más débil, los niveles son:
+
+- **Fuerte**:  capacidad de servir solicitudes simultáneamente. Se garantiza que las lecturas devuelven la versión más reciente de un elemento. 
+- **Uso vinculado**: 
+- **Sesión**: as escrituras se replican en un mínimo de tres réplicas (en un conjunto de cuatro réplicas) en la región local, con replicación asincrónica en todas las demás regiones.
+- **Prefijo coherente**: la escritura se realiza en lotes separados. Solo al leer el lote en conjunto se obtiene la coherencia completa.
+- **Ocasional**: 
 
 **Baja latencia**: tanto para escritura como para lectura, hay  una respuesta menor a los 10ms en el 99% de los casos. 
 
@@ -338,12 +426,6 @@ Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo t
 
 **Azure Cosmos DB items**:  En función de la API que use, un elemento de Azure Cosmos DB puede representar un documento de una colección, una fila de una tabla, o un nodo o un borde de un grafo. Se refiere a los registros(document, row, node, edge).
 
-
-**Request Units (RU)**, 3 modos
-- Provisioned throughtput
-- Serverless
-- Autoscale
-
 ### API para Cosmos DB
 
 Azure Cosmos DB ofrece varias API de base de datos, entre las que se incluyen las siguientes:
@@ -355,7 +437,7 @@ Azure Cosmos DB ofrece varias API de base de datos, entre las que se incluyen la
 - **Azure Cosmos DB for Table** almacena datos en formato clave-valor.
 - **Azure Cosmos DB for Apache Gremlin** permite a los usuarios realizar consultas de grafos y almacenar datos como bordes y vértices.
 
-### Unidades de solicitud
+### Unidades de solicitud (Request Units [RU])
 Azure Cosmos DB normaliza el costo de todas las operaciones de base de datos y este se expresa en unidades de solicitud (o RU, para abreviar). Una unidad de solicitud representa los recursos del sistema, como CPU e IOPS, y la memoria que se necesitan para realizar las operaciones de base de datos
 
 El tipo de cuenta de Azure Cosmos DB que usa determina el modo en que se cobrarán las RU consumidas.
@@ -366,10 +448,7 @@ Hay tres modos en los que se puede crear una cuenta:
 - **Modo sin servidor**: no es necesario aprovisionar rendimiento al crear recursos, factura el número de unidades de solicitud consumidas por las operaciones de base de datos.
 - **Modo de escalabilidad automática**: puede escalar de forma automática e instantánea el rendimiento (RU/s) de la base de datos o del contenedor en función de su uso. Adecuado para cargas de trabajo críticas que tienen patrones de tráfico variables o imprevisibles y requieren SLA para el alto rendimiento y la escala.
 
-
 [Creación de CosmosDB Account + DB + Container + Item](./Resource/Module04/CreateCosmosDBforNoSQL.mkv)
-
-
 
 # Module 05: Contenedores (IAAS)
 
@@ -388,7 +467,6 @@ Ofrecen precios predecibles y varias opciones para alinearse con la capacidad y 
 - **Replicación geográfica en varias regiones** Permite minimizar la latencia mediante la replicación geográfica del registro. ambién puede configurar **webhooks** regionales para que le envíen notificaciones cuando se produzcan eventos en réplicas concretas, como cuando se insertan imágenes.
 - **Espacios de nombres del repositorio**: puede permitir el uso compartido de un registro único en varios grupos de su organización. Azure Container Registry admite espacios de nombres anidados, lo que permite el aislamiento del grupo.
 
-
 ### Almacenamiento
 ya sea Básico, Estándar o Premium, se gozan de características avanzadas:
 
@@ -400,7 +478,6 @@ ya sea Básico, Estándar o Premium, se gozan de características avanzadas:
 
 **Almacenamiento escalable**: permite crear tantos repositorios, imágenes, capas o etiquetas como necesite, hasta el límite de almacenamiento del registro.
 
-
 **Azure Container Registry Tasks** (ACR Tasks) para simplificar la creación, la prueba, el envío de cambios y la implementación de imágenes en Azure.  Cree tareas de varios pasos para automatizar la compilación, prueba y aplicación de revisiones de varias imágenes de contenedor en paralelo en la nube. Configure las tareas de compilación para automatizar el sistema operativo del contenedor y la canalización de aplicaciones de revisión de marcos, y compile imágenes de forma automática cuando el equipo guarde el código en el control de origen.
 
 Escenarios de uso: 
@@ -408,11 +485,13 @@ Escenarios de uso:
 **Tarea rapida**: compile e inserte una sola imagen de contenedor en un registro de contenedor a petición en Azure, sin tener que realizar una instalación local del motor de Docker. 
 
 Para compilar una imagen de contenedor desde el código de ejemplo.
+
 ```
 az acr build --registry $ACR_NAME --image helloacrtasks:v1 .
 ```
 
 Para crear un almacen de claves
+
 ```
 az keyvault create --resource-group $RES_GROUP --name $AKV_NAME
 ```
@@ -447,7 +526,6 @@ Permite trabajar con un contenedor o con una aplicación que esta contenida en v
 - **plantilla de Resource Manager**: Se recomienda cuando se necesite implementar recursos adicionales de un servicio de Azure (por ejemplo, un recurso compartido de Azure Files) al implementar instancias de contenedor.
 - **archivo YAML**: (similar a Docker Compose) Se recomienda cuando la implementación incluya solo instancias de contenedor.
 
-
 - **Asignación de recursos**: Si bien es un modo serverless se especifica CPUs, memoria y opcionalmente GPUs, a un grupo de contenedores mediante la adición de las solicitudes de recursos de las instancias del grupo.
 
 - **Redes**: se comparten direcciones IP y puertos.
@@ -466,15 +544,13 @@ Permite trabajar con un contenedor o con una aplicación que esta contenida en v
 ### Directivas de reinicio
 Cuando se crea un grupo de contenedores, se puede especificar una de tres configuraciones:
 
-**Always**:	Los contenedores del grupo de contenedores siempre se reinician. (valor de configuración predeterminado).
+**Always**: Los contenedores del grupo de contenedores siempre se reinician. (valor de configuración predeterminado).
 
 **Never**: Nunca se reinician los contenedores del grupo de contenedores. Los contenedores se ejecutan al menos una vez.
 
-**OnFailure**:	Los contenedores del grupo de contenedores se reinician solo cuando se produce un error en el proceso ejecutado en el contenedor (cuando se cierra con un código de salida distinto de cero). Los contenedores se ejecutan al menos una vez.
+**OnFailure**: Los contenedores del grupo de contenedores se reinician solo cuando se produce un error en el proceso ejecutado en el contenedor (cuando se cierra con un código de salida distinto de cero). Los contenedores se ejecutan al menos una vez.
 
 Se especifica con el parámetro ``` --restart-policy ``` al llamar a ``` az container create ```.
-
-
 
 ## Azure Container Apps
 Es un cluster ya preparado(por debajo se ejecuta Azure Kubernetes Services), que requiere de cierta condiguracion para funcionar. Permite aplicar microsevicios o aplicaciones contenerizadas en modos ServerLess. Admite cualquier imagen de contenedor x86-64 (linux/amd64) basada en Linux. No hay ninguna imagen de contenedor base necesaria y, si un contenedor se bloquea, se reinicia de forma automática.
@@ -500,8 +576,6 @@ Las arquitecturas de microservicios permiten desarrollar, actualizar, controlar 
 **Administración de Revisiones**: Una revisión es una instantánea inmutable de una versión de la aplicación de contenedor.`az containerapp update` para generar versiones, que permiten volver a revisiones anteriores, tambien se puede ejecutar 2 revisiones a la vez, hasta validar el funcionamiento de la nueva revision, y asi apagar la más antigua. Puede controlar qué revisiones están activas y el tráfico externo que se dirige a cada revisión activa. Los nombres de revisión se usan para identificar una revisión, y en la URL de la revisión.
 
 ```az containerapp revision list``` : enumera todas las revisiones asociadas a la aplicación de contenedor.
-
-
 
 # Module 06: Implementación de la autenticación y autorización de usuarios
 
@@ -558,7 +632,6 @@ Permite que los desarrolladores y clientes empresariales protejan los servicios 
 - Autorización para que solo los dispositivos inscritos en Intune accedan a servicios específicos
 - Restricción de ubicaciones de usuario e intervalos IP
 
-
 ## MSAL (Microsoft Auth Library)
 Liberia que se utiliza dentro de la aplicación a nivel de código. Soporta .net, JavaScript, Python, Android y iOS. Permite que los desarrolladores adquieran tokens desde la Plataforma de identidad de Microsoft para autenticar usuarios y acceder a API web protegidas.
 
@@ -589,17 +662,14 @@ Existen tres tipos de firmas de acceso compartido
 - **SAS de Servicio**: se protege con la clave de cuenta de almacenamiento. Una SAS de servicio delega el acceso a un recurso en los servicios de Azure Storage siguientes: Blob Storage, Queue Storage, Table Storage o Azure Files.
 - **SAS de Cuenta**: se protege con la clave de cuenta de almacenamiento. Delega el acceso a los recursos en uno o varios de los servicios de almacenamiento. Proporcionan una identidad administrada automáticamente en Azure Active Directory (Azure AD) para que las aplicaciones la utilicen al conectarse a los recursos que admiten la autenticación de Azure AD. Las aplicaciones pueden usar identidades administradas para obtener tokens de Azure AD sin necesidad de administrar credenciales.
 
-
 ## Microsoft Graph
 Nos brinda información sobre todo el ecosistema de Microsoft 365, proporciona un modelo de programación unificado para acceder ad atos en Microsoft 365, Windows 10 y Enterprise Mobility + Security. Facilita el acceso y el flujo de datos y cómo crear consultas mediante REST y código. Crear aplicaciones para organizaciones y consumidores que interactúen con millones de usuarios.
-
 
 Tres componentes principales facilitan el acceso y el flujo de datos:
 
 - **Microsoft Graph API** ofrece un único punto de conexión. Puede usar las API REST o los SDK para acceder al punto de conexión. También incluye un conjunto eficaz de servicios que permiten administrar la identidad, el acceso, el cumplimiento y la seguridad de usuarios y dispositivos, y ayudan a proteger a las organizaciones frente a la filtración o la pérdida de datos.
 - **Conectores de Microsoft Graph** funcionan en la dirección de entrada y entregan datos externos en la nube de Microsoft en aplicaciones y servicios, con el fin de mejorar las experiencias de Microsoft 365, como Búsqueda de Microsoft. Existen conectores para muchos orígenes de datos de uso frecuente, como Box, Google Drive, Jira y Salesforce.
 - **Microsoft Graph Data Connect** conjunto de herramientas para simplificar la entrega de datos de Microsoft Graph en almacenes de datos de Azure conocidos de forma segura y escalable.
-
 
 # Module 07:Implementar seguridad en soluciones en la nube
 
@@ -627,7 +697,6 @@ Key Vault aplica el protocolo Seguridad de la capa de transporte (TLS) para prot
 - **Registro**: activar el registro y las alertas.
 - **Opciones de recuperación**: active la eliminación temporal y la protección de purga si desea protegerse contra la eliminación forzada del secreto.
 
-
 ### Autenticación
 (Azure Key Vault)Funciona junto con Azure Active Directory, que es responsable de autenticar la identidad de cualquier entidad de seguridad determinada.
 
@@ -636,7 +705,6 @@ En el caso de las aplicaciones, hay dos maneras de obtener una entidad de servic
 - Habilite una **identidad administrada** asignada por el sistema para la aplicación, lo que permite la administración interna entre la entidad de servicio de la aplicación y la autentica automáticamente con otros servicios.
 - (Si nos es posible usar identidad administrada) registre la aplicación con su inquilino de Azure AD. El registro también crea un segundo objeto de aplicación que identifica la  aplicación en todos los inquilinos.
 
-
 ## Identidades administradas
 Se utilizan cuando dos servicios se tienen que comunicar entre si, y un servicio necesita permisos del otro, sin necesidad de administrar las credenciales.
 
@@ -644,7 +712,6 @@ La aplicación puede tener dos tipos de identidades:
 
 - **Identidad asignada por el sistema** está asociada al almacén de configuración. Solo puede tener una identidad asignada por el sistema.
 - **Identidad asignada por el usuario** puede tener varias identidades asignadas por el usuario.
-
 
 ## Implementando App Configuration
 Es un servicio donde se concentran todas las configuraciones de nuestras aplicaciones. Con lo que se evita que cada aplicación busque sus propias configuraciones, en cambio, se puede mediante el uso de un único App Config, centralizar todas las configuraciones.
@@ -659,7 +726,6 @@ Existe para:
 Las **claves** sirven como nombre de los pares clave-valor y se usan para almacenar y recuperar los valores correspondientes.
 
 Los datos de configuración, se cifran tanto en reposo como en tránsito.
-
 
 # Module 08: Implementación de API Management
 Es un servicio que esta en el medio, entre las aplicación y las API, sirve para protección y limitación de las API. Es un gateway ya que enruta las peticiones hacia las API correspondientes. Por lo que gestiona APIs, políticas, parámetros, suscripción para desarrolladores.
@@ -718,13 +784,11 @@ Cinco conceptos fundamentales:
 - **Suscripción**: cuando el event grid recibe eventos, y se desea que los suscriptores escuchen los eventos, por ejemplo una pagina web, como si fuera un Event Handler. Por lo que genera una suscripción para cada uno de esos destinos que recibirán los eventos.
 - **Event Handlers**:
 
-
 ## Event Hub
 Servicio de gestión de (**muchos**) eventos por segundo. Con un flujo de eventos constantes. Permitiendo manejar grandes volúmenes de información de eventos.
 Se utiliza para hacer analítica de Data en tiempo real.
 La velocidad de un centro de eventos de Azure está determinada por la cantidad de unidades de rendimiento que reserva para él. Puede establecer entre 1 y 20 unidades de rendimiento para Event Hub.
 **1 unidad de rendimiento** para los datos que ingresan a un centro de eventos representa 1 MB por segundo o 1000 eventos por segundo (lo que ocurra primero)
-
 
 # Module 10: Soluciones basadas en mensajes
 
@@ -765,20 +829,15 @@ Almacena gran volumen de mensajes.
 - Queue
 - Message
 
-
 # Module 11: Solución de problemas de soluciones mediante Application Insights
-
-
 
 Permite obtener información para mejorar el rendimiento y la escalabilidad de las aplicaciones.
 
 ## Application Insight
 Permite monitorear la infraestructura, como se comporta la VM. También podemos monitorear la aplicación, recibiendo logs.
 
-
 ## Telemetría
 Permite tener gran flujo de información, el End To End de la aplicación. Tiempos de respuesta, stack de errores, tasas de respuestas, de fallas.
-
 
 # Module 12: Implementación de almacenamiento en caché para soluciones
 
@@ -835,7 +894,6 @@ Estos son algunos comandos comunes que puede usar:
 | del [key] | Elimina el valor asociado con la clave. |
 | flushdb | Elimine todas las claves y valores de la base de datos. |
 
-
 ### Tiempo de expiración
 Es preciso tener una forma de que los valores expiren cuando estén obsoletos. En Redis, para hacerlo es preciso aplicar un período de vida (TTL) a una clave.
 Cuando transcurra el TTL, la clave se elimina automáticamente, exactamente como si se hubiera emitido el comando DEL. Estas son algunas notas acerca de las expiraciones de TTL.
@@ -863,7 +921,6 @@ var connectionString = ConnectionMu1tip1exer.Connect(connectionString);
 
 ```
 
-
 ## Develop for Storage on CDNs
 Los CDNs pueden ser aplicados en App Services y Storage Account.
 
@@ -889,7 +946,6 @@ permite autorizar o bloquear contenido en países o regiones específicos, segú
 - Microsoft
 - Akamai
 - Verizon
-
 
 # Maquinas virtuales
 El uso de **Azure Spot Virtual Machines** le permite aprovechar nuestra capacidad no utilizada con un ahorro de costos significativo. En cualquier momento en que Azure necesite recuperar la capacidad, la infraestructura de Azure expulsará las máquinas virtuales al contado de Azure. Por lo tanto, Azure Spot Virtual Machines es ideal para cargas de trabajo que pueden manejar interrupciones como trabajos de procesamiento por lotes, entornos de desarrollo/prueba, grandes cargas de trabajo de cómputo y más. Consulte el documento de Microsoft
@@ -920,4 +976,3 @@ La plantilla contiene las secciones siguientes:
 - **Recursos**: especifique los recursos que se van a implementar.
 
 - **Salidas**: devuelva valores de los recursos implementados.
-
