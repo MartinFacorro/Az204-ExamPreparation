@@ -118,16 +118,16 @@ Es posible que quiera restringir el número máximo de instancias que una aplica
 
 ### Exploración del desarrollo de Azure Functions
 
-Una función contiene dos elementos importantes: 
+Una función contiene dos elementos importantes:
 
-* **el código**, que se puede escribir en diversos lenguajes, 
+* **el código**, que se puede escribir en diversos lenguajes
 * **y la configuración**, el archivo function.json.
 
 Con los lenguajes compilados, este archivo de configuración se genera automáticamente a partir de las anotaciones del código. Para los lenguajes de scripting, debe proporcionar el archivo de configuración.
 
-El archivo function.json define el desencadenador de la función, los enlaces y otras opciones de configuración. 
+El archivo function.json define el desencadenador de la función, los enlaces y otras opciones de configuración.
 
-Cada función tiene un solo desencadenador. Este archivo de configuración se usa en tiempo de ejecución para determinar los eventos que se supervisarán y cómo pasar datos y devolverlos al ejecutarse una función. 
+Cada función tiene un solo desencadenador. Este archivo de configuración se usa en tiempo de ejecución para determinar los eventos que se supervisarán y cómo pasar datos y devolverlos al ejecutarse una función.
 
 Ejemplo de archivo function.json.
 
@@ -148,7 +148,7 @@ JSON
 }
 ```
 
-La propiedad **bindings** es donde configura los enlaces y los desencadenadores. Cada enlace comparte unos ajustes de configuración comunes y algunos parámetros que son específicos de un determinado tipo de enlace. 
+La propiedad **bindings** es donde configura los enlaces y los desencadenadores. Cada enlace comparte unos ajustes de configuración comunes y algunos parámetros que son específicos de un determinado tipo de enlace.
 
 
 Cada enlace requiere la siguiente configuración:
@@ -164,16 +164,16 @@ Cada enlace requiere la siguiente configuración:
 La aplicación de función proporciona un contexto de ejecución en Azure donde ejecutar las funciones. Como tal, es la unidad de implementación y administración de las funciones. Una aplicación de función se compone de una o varias funciones individuales que se administran, implementan y escalan conjuntamente. Todas las funciones de una aplicación de función comparten el mismo plan de precios, el mismo método de implementación y la misma versión en tiempo de ejecución. Una aplicación de función es como una forma de organizar y administrar las funciones de manera colectiva.
 
 ```
-Nota
+❕ Nota
 
 En Functions 2.x, todas las funciones de una aplicación de funciones deben crearse en el mismo lenguaje. En versiones anteriores del tiempo de ejecución de Azure Functions, esto no era necesario.
 Estructura de carpetas
 ```
 
 
-El código de todas las funciones de una aplicación de funciones está ubicado en una carpeta de proyecto raíz que contiene un archivo de configuración de host. 
+El código de todas las funciones de una aplicación de funciones está ubicado en una carpeta de proyecto raíz que contiene un archivo de configuración de host.
 
-El archivo host.json contiene configuraciones específicas del entorno de ejecución y está en la carpeta raíz de la aplicación de funciones. 
+El archivo host.json contiene configuraciones específicas del entorno de ejecución y está en la carpeta raíz de la aplicación de funciones.
 
 Un carpeta bin contiene paquetes y otros archivos de biblioteca que requiere la aplicación de funciones. Las estructuras de carpeta específicas necesarias para la aplicación de funciones dependen del lenguaje:
 
@@ -190,7 +190,7 @@ Un carpeta bin contiene paquetes y otros archivos de biblioteca que requiere la 
 Azure Functions le permite usar el editor de código y las herramientas de desarrollo que prefiera para crear y probar sus funciones en un equipo local. Las funciones locales pueden conectarse a servicios de Azure en directo, y puede depurar sus funciones en el equipo local con el entorno de tiempo de ejecución de Functions completo.
 
 ```
-Advertencia
+⚠️ Advertencia
 
 No mezcle el desarrollo local con el desarrollo del portal en la misma aplicación de función. Cuando cree y publique funciones desde un proyecto local, no debe intentar mantener o modificar el código del proyecto en el portal.
 ```
@@ -295,11 +295,11 @@ using Newtonsoft.Json.Linq;
 // The method return value creates a new row in Table Storage
 public static Person Run(JObject order, ILogger log)
 {
-    return new Person() { 
-            PartitionKey = "Orders", 
-            RowKey = Guid.NewGuid().ToString(),  
+    return new Person() {
+            PartitionKey = "Orders",
+            RowKey = Guid.NewGuid().ToString(),
             Name = order["Name"].ToString(),
-            MobileNumber = order["MobileNumber"].ToString() };  
+            MobileNumber = order["MobileNumber"].ToString() };
 }
 
 public class Person
@@ -321,7 +321,7 @@ El mismo archivo function.json puede utilizarse con una función de JavaScript:
 // From an incoming queue message that is a JSON object, add fields and write to Table Storage
 module.exports = async function (context, order) {
     order.PartitionKey = "Orders";
-    order.RowKey = generateRandomId(); 
+    order.RowKey = generateRandomId();
 
     context.bindings.order = order;
 };
@@ -364,14 +364,30 @@ public class Person
 }
 ```
 
+### Conexión de funciones a Servicios Azure
 
-https://learn.microsoft.com/es-es/training/modules/develop-azure-functions/4-connect-azure-services
+No acepta directamente kis detakkes de conexión, por lo que la propiedad ```connection``` debe tener especificado el nombre de una variable de entorno que contenga la cadena de conexión.
+
+### Configuración de una conexión basada en identidades.
+
+❕ No se admite con Durable Functions
+
+Cuando se hospeda en el servicio de Azure functions, las conexiones basadas en identidades usan una identidad administrada.
+
+
+EJERCICIO: https://learn.microsoft.com/es-es/training/modules/develop-azure-functions/5-create-function-visual-studio-code
 
 
 
 
-## Durable Functions 
-Extensión de Azure Functions que permite escribir funciones con estado en un entorno de proceso sin servidor. La extensión permite definir flujos de trabajo con estado mediante la escritura de funciones del orquestador y entidades con estado mediante la escritura de funciones de entidad con el modelo de programación de Azure Functions. 
+
+
+
+
+
+
+
+
 
 ### Patones utilizados
 

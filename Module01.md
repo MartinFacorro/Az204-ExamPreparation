@@ -29,10 +29,12 @@ Azure App Service permite alojar aplicaciones web en Linux(tambien conocidas com
 Es posible consultar la lista de lenguajes soportados mediante el siguiente comando:
 
 ```powershell
+powershell
+
 az webapp list-runtimes --os-type linux
 ```
 
-**Nota**: Limitciones de App Service en Linux:
+❕ **Nota**: Limitciones de App Service en Linux:
 
 * No se admite en el plan tarifa compartido
 * Las imagenes integradas, el codigo y el contenido se asignan a un volumen de almacenamiento para el contenido web, respaldado por Azure Storage. La latencia de disco es mayor y mas variables que la del sistema de archivos del contenedor.
@@ -76,10 +78,10 @@ La autenticacion integrada es una forma sencilla de controlar el acceso a las ap
 ### Funcionamiento
 Cuando está habilitado, cada solicitud HTTP entrante pasa a través de él antes de que el código de aplicación lo controle. Este módulo controla varios aspectos de la aplicación:
 
-    * Autentica usuarios y clientes con los proveedores de identidades especificados.
-    * Valida, almacena y actualiza los tokens de OAuth emitidos por los proveedores de identidades configurados.
-    * Administra la sesión autenticada
-    * Inserta información de identidad en encabezados de solicitud HTTP.
+* Autentica usuarios y clientes con los proveedores de identidades especificados.
+* Valida, almacena y actualiza los tokens de OAuth emitidos por los proveedores de identidades configurados.
+* Administra la sesión autenticada
+* Inserta información de identidad en encabezados de solicitud HTTP.
 
 El módulo se ejecuta por separado del código de la aplicación y se puede configurar mediante Azure Resource Manager o mediante un archivo de configuración. No se necesitan SDK, lenguajes de programación específicos ni cambios en el código de la aplicación.
 
@@ -89,11 +91,11 @@ El módulo se ejecuta por separado del código de la aplicación y se puede conf
 ### Flujo de autenticación
 El flujo de autenticación se inicia cuando un usuario intenta acceder a una aplicación web protegida. El flujo de autenticación se compone de los siguientes pasos:
 
-    * El usuario intenta acceder a la aplicación web protegida.
-    * El módulo de autenticación y autorización redirige al usuario a la página de inicio de sesión del proveedor de identidades.
-    * El usuario inicia sesión en el proveedor de identidades.
-    * El proveedor de identidades emite un token de OAuth al módulo de autenticación y autorización.
-    * El módulo de autenticación y autorización valida el token y, si es válido, permite que el usuario acceda a la aplicación web protegida.
+* El usuario intenta acceder a la aplicación web protegida.
+* El módulo de autenticación y autorización redirige al usuario a la página de inicio de sesión del proveedor de identidades.
+* El usuario inicia sesión en el proveedor de identidades.
+* El proveedor de identidades emite un token de OAuth al módulo de autenticación y autorización.
+* El módulo de autenticación y autorización valida el token y, si es válido, permite que el usuario acceda a la aplicación web protegida.
 
 El flujo es el mismo para todos los proveedores, pero varia en funcion de si desea iniciar sesion con el SDK del proveedor o con el SDK de Azure AD.
 
@@ -118,7 +120,7 @@ El tráfico de red entrante y saliente de las aplicaciones web de Azure App Serv
 
 Los roles que hospedan la carga de trabajo del cliente se denominan roles de trabajo. Todos los roles de una implementación de App Service existen en una red de varios inquilinos. Puesto que hay muchos clientes diferentes en la misma unidad de escalado de App Service, no puede conectar la red de App Service directamente a su red.
 
-En lugar de conectarse a redes, necesita características para administrar los diversos aspectos de la comunicación de aplicaciones. 
+En lugar de conectarse a redes, necesita características para administrar los diversos aspectos de la comunicación de aplicaciones.
 
 | Características de entrada | Características de salida |
 | -------------------------- | ------------------------- |
@@ -171,6 +173,9 @@ Cuando haya terminado, seleccione Actualizar. No olvide volver a seleccionar Gua
 Para agregar o editar la configuración de la aplicación de forma masiva, haga clic en el botón Avanzado. Cuando haya terminado, seleccione Actualizar. La configuración de la aplicación tiene el formato JSON siguiente:
 
 ```json
+json
+
+
 [
   {
     "name": "<key-1>",
@@ -193,6 +198,8 @@ Para los desarrolladores de ASP.NET y ASP.NET Core, los valores establecidos en 
 La adición y edición de cadenas de conexión sigue los mismos principios que otras configuraciones de la aplicación y también se puede vincular a ranuras de implementación. Un ejemplo de cadenas de conexión en formato JSON que se usaría para la adición o edición de forma masiva.
 
 ```json
+json
+
 [
   {
     "name": "name-1",
@@ -222,21 +229,21 @@ Una lista de las opciones disponibles actualmente:
 
 * Configuración de plataforma: Le permite configurar opciones para la plataforma de alojamiento, incluidas:
 
-    * Valor de bits: 32 bits o 64 bits.
+* Valor de bits: 32 bits o 64 bits.
 
-    * Protocolo de WebSocket: para ASP.NET SignalR o socket.io, por ejemplo.
+* Protocolo de WebSocket: para ASP.NET SignalR o socket.io, por ejemplo.
 
-    * Always On: mantenga cargada la aplicación, incluso cuando no hay tráfico. De forma predeterminada, Always On no está habilitado y la aplicación se descarga después de 20 minutos sin ninguna solicitud entrante. Esto es necesario en los WebJobs continuos o WebJobs que se desencadenan mediante una expresión CRON.
+* Always On: mantenga cargada la aplicación, incluso cuando no hay tráfico. De forma predeterminada, Always On no está habilitado y la aplicación se descarga después de 20 minutos sin ninguna solicitud entrante. Esto es necesario en los WebJobs continuos o WebJobs que se desencadenan mediante una expresión CRON.
 
-    * Versión de canalización administrada: el modo de canalización de IIS. Establézcalo en Clásico si tiene una aplicación heredada que requiere una versión anterior de IIS.
+* Versión de canalización administrada: el modo de canalización de IIS. Establézcalo en Clásico si tiene una aplicación heredada que requiere una versión anterior de IIS.
 
-    * Versión de HTTP: Establézcala en 2.0 para habilitar la compatibilidad con el protocolo HTTP/2.
+* Versión de HTTP: Establézcala en 2.0 para habilitar la compatibilidad con el protocolo HTTP/2.
 
-    * Afinidad ARR: en una implementación de varias instancias, asegúrese de que el cliente esté enrutado a la misma instancia de la vida de la sesión. Puede establecer esta opción en Desactivada para las aplicaciones sin estado.
+* Afinidad ARR: en una implementación de varias instancias, asegúrese de que el cliente esté enrutado a la misma instancia de la vida de la sesión. Puede establecer esta opción en Desactivada para las aplicaciones sin estado.
 
-    * Depuración: habilite la depuración remota para las aplicaciones de ASP.NET, ASP.NET Core o Node.js. Esta opción se desactiva automáticamente después de 48 horas.
+* Depuración: habilite la depuración remota para las aplicaciones de ASP.NET, ASP.NET Core o Node.js. Esta opción se desactiva automáticamente después de 48 horas.
 
-    * Certificados de cliente entrantes: requieren certificados de cliente en la autenticación mutua. La autenticación mutua TLS se usa para restringir el acceso a la aplicación mediante la habilitación de diferentes tipos de autenticación.
+* Certificados de cliente entrantes: requieren certificados de cliente en la autenticación mutua. La autenticación mutua TLS se usa para restringir el acceso a la aplicación mediante la habilitación de diferentes tipos de autenticación.
 
 
 ## Configurar asignaciones de ruta de acceso
@@ -316,6 +323,7 @@ Para las aplicaciones ASP.NET puede usar la clase de seguimiento para registrar 
 - Trace.WriteLine("Message"); *// Escribe un mensaje detallado*
 
 ```C#
+C#
 System.Diagnostics.Trace.TraceError("If you're seeing this, something bad happened");
 ```
 
@@ -330,8 +338,7 @@ se pueden ejecutar tanto en Windows como en Linux. Para registrar información e
 - logger.LogDebug("Message"); *// Escribe un mensaje de depuración en el nivel de registro 1*
 - logger.LogTrace("Mensaje"); *// Escribe un mensaje de seguimiento detallado en el nivel de registro 0*
 
-En el caso de las aplicaciones ASP.NET Core en Windows, estos mensajes se relacionan con los filtros de Azure Portal del siguiente 
-modo:
+En el caso de las aplicaciones ASP.NET Core en Windows, estos mensajes se relacionan con los filtros de Azure Portal del siguiente modo:
 
 - Los niveles 4 y 5 son mensajes de "error".
 - El nivel 3 es un mensaje de "advertencia".
