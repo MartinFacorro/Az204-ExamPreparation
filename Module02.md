@@ -2,6 +2,103 @@
 
 https://learn.microsoft.com/es-es/training/paths/implement-azure-functions/
 
+## Azure Function
+Azure Functions es una solución sin servidor que le permite escribir menos código, mantener menos infraestructura y ahorrar costos. En lugar de preocuparse por implementar y mantener servidores, la infraestructura en la nube proporciona todos los recursos actualizados necesarios para mantener las aplicaciones en ejecución.
+
+Azure Functions admite desencadenadores que son formas de iniciar la ejecución del código, y enlaces que son formas de simplificar la codificación para los datos de entrada y salida.
+
+### Comparativa entre Functions y WebJobs
+Al igual que Azure Functions, Azure App Service WebJobs con el SDK de WebJobs es un servicio de integración de tipo código primero que está diseñado para desarrolladores. Ambos se basan en Azure App Service y admiten características como la integración del control de código fuente, la autenticación y la supervisión con integración de Application Insights.
+
+Azure Functions se basa en el SDK de WebJobs, por lo que comparte muchos desencadenadores de eventos y conexiones con otros servicios de Azure. Estos son algunos de los factores que se deben tener en cuenta al elegir entre Azure Functions y WebJobs con el SDK de WebJobs:
+
+| Funciones | WebJobs con el SDK de WebJobs |
+| --- | --- |
+| Modelo de aplicaciones sin servidor con escalado automático | Sí |
+| Desarrollo y pruebas en el explorador | Sí |
+| Precio de pago por uso | Sí |
+| Integración con Logic Apps | Sí |
+| Desencadenar eventos | Temporizador<br>Blobs y colas de Azure Storage<br>Colas y temas de Azure Service Bus<br>Azure Cosmos DB<br>Azure Event Hubs<br>HTTP/WebHook (GitHub, Slack)<br>Azure Event Grid |
+| Sistema de archivos | Temporizador<br>Blobs y colas de Azure Storage<br>Colas y temas de Azure Service Bus<br>Azure Cosmos DB<br>Azure Event Hubs<br>Sistema de archivos |
+
+### Comparación de las opciones de hospedaje de Azure Functions
+
+Cuando crea una aplicación de funciones en Azure, debe elegir un plan de hospedaje para su aplicación. Hay tres planes de hospedaje básico disponibles para Azure Functions: Plan de consumo, plan Premium y plan App Service (Dedicado). Todos los planes de hospedaje tienen disponibilidad general (GA) en máquinas virtuales Linux y Windows.
+
+Ventajas de los tres planes de hospedaje principales de Functions:
+
+| Plan | Ventajas |
+| --- | --- |
+| Plan de consumo | Este es el plan de hospedaje predeterminado. Escala de forma automática y pagará los recursos de proceso solo cuando se ejecuten las funciones. Las instancias del host de Functions se agregan y quitan de forma dinámica según el número de eventos entrantes. |
+| Plan Premium | Escala automáticamente en función de la demanda mediante trabajos preparados previamente que ejecutan aplicaciones sin ningún retraso después de estar inactivas, ejecuta en instancias más eficaces y se conecta a redes virtuales. |
+| Plan dedicado | Ejecute sus funciones en un plan de App Service con las tarifas de plan de App Service normal. Mejor para escenarios de ejecución prolongada en los que no se puede usar Durable Functions. |
+
+Hay otras dos opciones de hospedaje que proporcionan el mayor control y aislamiento posibles con los que ejecutar las aplicaciones de funciones.
+
+| Opción de hospedaje | Detalles |
+| --- | --- |
+| Azure App Service Environment | App Service Environment (ASE) es una característica de App Service que proporciona un entorno completamente aislado y dedicado para ejecutar de forma segura las aplicaciones de App Service a gran escala. |
+| Kubernetes (Directo o Azure Arc) | Kubernetes proporciona un entorno completamente aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes. |
+
+
+### Planes de hospedaje y escalado
+
+Se comparan los comportamientos de escalado de los distintos planes de hospedaje. El número máximo de instancias se da en función de una aplicación por función (consumo) o por plan (Premium/Dedicado), a menos que se indique lo contrario.
+
+| Opción de hospedaje | Escalado horizontal | N.º máximo de instancias |
+| --- | --- | --- |
+| Plan de consumo | Basado en eventos. Escale horizontalmente de forma automática, incluso durante períodos de gran carga. La infraestructura de Azure Functions escala los recursos de CPU y memoria mediante la incorporación de más instancias del host de Functions, según el número de eventos de desencadenador entrantes. | Windows: 200, Linux: 100 |
+| Plan Premium | Basado en eventos. Escale horizontalmente de forma automática, incluso durante períodos de gran carga. La infraestructura de Azure Functions escala automáticamente los recursos de CPU y la memoria mediante la incorporación de más instancias del host de Functions, según el número de eventos desencadenados por las funciones. | Windows: 100, Linux: 20-100 |
+| Plan dedicado | Escalabilidad automática o manual | 10-20 |
+| Azure App Service Environment | Escalabilidad automática o manual | 100 |
+| Kubernetes | Escalado automático basado en eventos para los clústeres de Kubernetes mediante KEDA. | Varía en función del clúster |
+
+
+### Duración del tiempo de espera de una aplicación de función
+
+La propiedad ```functionTimeout``` del archivo del proyecto host.json especifica la duración del tiempo de espera de las funciones de una aplicación de funciones. Esta propiedad se aplica específicamente a las ejecuciones de funciones. Una vez que el desencadenador inicia la ejecución de la función, la función debe devolver o responder dentro de la duración del tiempo de espera.
+
+
+Por defecto es de 5 minutos, y como máximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
+El tiempo puede ser mayor en planes Premium y Dedicados donde por defecto tienen definido 302 minutos.
+
+Valores predeterminados y máximos (en minutos) para planes específicos:
+
+| Plan | Valor predeterminado | Máximo |
+| --- | --- | --- |
+| Plan de consumo | 5 | 10 |
+| Plan Premium | 30 | Sin límite |
+| Plan dedicado | 30 | Sin límite |
+
+
+
+### Requisitos de la cuenta de almacenamiento
+
+En cualquier plan, una aplicación de funciones requiere una cuenta de Azure Storage general que admita almacenamiento de Azure en blobs, colas, archivos y tablas. Esto es porque Functions se basa en Azure Storage para operaciones como la administración de desencadenadores y el registro de las ejecuciones de funciones, pero algunas cuentas de almacenamiento no admiten colas ni tablas.
+
+Los desencadenadores y enlaces para almacenar los datos de la aplicación también pueden usar la misma cuenta de almacenamiento que usa la aplicación de función. Sin embargo, para las operaciones que consumen muchos recursos de almacenamiento, debe usar una cuenta de almacenamiento independiente.
+
+### Escalado de Azure Functions
+
+En los planes Consumo y Premium, Azure Functions escala los recursos de CPU y memoria mediante la incorporación de instancias adicionales del host de Functions.
+
+Cada instancia del host de Functions del plan de consumo tiene una limitación de 1.5 GB de memoria y una CPU. Una instancia del host es la aplicación de funciones completa, lo que significa que todas las funciones de una aplicación de funciones comparten recursos al mismo tiempo en una instancia y escala determinadas. Las aplicaciones de funciones que comparten el mismo plan de consumo se escalan de manera independiente.
+
+https://learn.microsoft.com/es-es/training/modules/explore-azure-functions/4-scale-azure-functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Durable Functions 
 Extensión de Azure Functions que permite escribir funciones con estado en un entorno de proceso sin servidor. La extensión permite definir flujos de trabajo con estado mediante la escritura de funciones del orquestador y entidades con estado mediante la escritura de funciones de entidad con el modelo de programación de Azure Functions. 
 
@@ -18,24 +115,8 @@ Extensión de Azure Functions que permite escribir funciones con estado en un en
 Código de diferentes lenguajes) para que se ejecuten en determinado momento. Reciben un trigger(manejado por un Storage Account) que actúa como disparador de la ejecución del código.
 [Azure Function como núcleo de servicios](/Resource/Module02/AzureFunctions.png)
 
-Se puede desarrollar local y luego subirlo dentro de un Function App. Se usan para ejecutar en un periodo muy corto de tiempo.
 
-Existe 3 planes(hosting) indica el tamaño de la VM, como escala y desescala:
 
-- **Consumo (o Serverless)**: paga por lo que usos, Micrososft escala por consumo, y si no se usa, Microsoft lo desescala. Luego de 20 minutos sin ser usado, el servicio se apaga. Al recibir un Request, se levanta el servicio y responde (lo que hace más lenta la  respuesta)
-- **Premiun**: se puede elegir (en máquinas virtuales) los recursos, escala y desescala de manera automática según la necesidad, pero, vienen precalentadas (Always On siempre encendido), ya que se paga un precio fijo.
-- **Dedicado**: ejecuta las Azure Functions dentro de un App Service Plan(se debe elegir el plan del App Service). Teniendo control sobre el escalado y desescalado (se usan reglas), Always On/Off, precio fijo.
-
-Los planes antes mencionados (Consumo, Premium, Dedicado) son los principales.
-
-También existen 2 planes más de hospedaje:
-
-- **Azure App Service Environment**: o (ASE) entorno completamente aislado y dedicado para ejecutar de forma segura aplicaciones a gran escala.
-- **Kubernetes**: (Directo o Azure Arc) entorno aislado y dedicado que se ejecuta sobre la plataforma de Kubernetes.
-
-### Time Out
-Por defecto es de 5 minutos, y como máximo puede definirse 10 minutos. Esta propiedad se define en el archivo host.json.
-El tiempo puede ser mayor en planes Premium y Dedicados donde por defecto tienen definido 302 minutos.
 
 ### Cuenta de almacenamiento
 Al crear una Function App, <mark>SIEMPRE</mark> se debe crear un Storage Account de uso general, ya que las funciones guardan logs de estados.
