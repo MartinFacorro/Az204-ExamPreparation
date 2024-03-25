@@ -120,9 +120,9 @@ Es posible que quiera restringir el número máximo de instancias que una aplica
 
 Una función contiene dos elementos importantes: 
 
-    * **el código**, que se puede escribir en diversos lenguajes, 
-    * **y la configuración**, el archivo function.json.
-    
+* **el código**, que se puede escribir en diversos lenguajes, 
+* **y la configuración**, el archivo function.json.
+
 Con los lenguajes compilados, este archivo de configuración se genera automáticamente a partir de las anotaciones del código. Para los lenguajes de scripting, debe proporcionar el archivo de configuración.
 
 El archivo function.json define el desencadenador de la función, los enlaces y otras opciones de configuración. 
@@ -132,6 +132,7 @@ Cada función tiene un solo desencadenador. Este archivo de configuración se us
 Ejemplo de archivo function.json.
 
 ```JSON
+JSON
 
 {
     "disabled":false,
@@ -162,10 +163,12 @@ Cada enlace requiere la siguiente configuración:
 
 La aplicación de función proporciona un contexto de ejecución en Azure donde ejecutar las funciones. Como tal, es la unidad de implementación y administración de las funciones. Una aplicación de función se compone de una o varias funciones individuales que se administran, implementan y escalan conjuntamente. Todas las funciones de una aplicación de función comparten el mismo plan de precios, el mismo método de implementación y la misma versión en tiempo de ejecución. Una aplicación de función es como una forma de organizar y administrar las funciones de manera colectiva.
 
-```Nota
+```
+Nota
 
 En Functions 2.x, todas las funciones de una aplicación de funciones deben crearse en el mismo lenguaje. En versiones anteriores del tiempo de ejecución de Azure Functions, esto no era necesario.
-Estructura de carpetas```
+Estructura de carpetas
+```
 
 
 El código de todas las funciones de una aplicación de funciones está ubicado en una carpeta de proyecto raíz que contiene un archivo de configuración de host. 
@@ -174,19 +177,20 @@ El archivo host.json contiene configuraciones específicas del entorno de ejecuc
 
 Un carpeta bin contiene paquetes y otros archivos de biblioteca que requiere la aplicación de funciones. Las estructuras de carpeta específicas necesarias para la aplicación de funciones dependen del lenguaje:
 
-    * Compilado en C# (.csproj)
-    * Script de C# (.csx)
-    * Script de F#
-    * Java
-    * JavaScript
-    * Python
+* Compilado en C# (.csproj)
+* Script de C# (.csx)
+* Script de F#
+* Java
+* JavaScript
+* Python
 
 
 ### Entornos de desarrollo locales
 
 Azure Functions le permite usar el editor de código y las herramientas de desarrollo que prefiera para crear y probar sus funciones en un equipo local. Las funciones locales pueden conectarse a servicios de Azure en directo, y puede depurar sus funciones en el equipo local con el entorno de tiempo de ejecución de Functions completo.
 
-```Advertencia
+```
+Advertencia
 
 No mezcle el desarrollo local con el desarrollo del portal en la misma aplicación de función. Cuando cree y publique funciones desde un proyecto local, no debe intentar mantener o modificar el código del proyecto en el portal.
 ```
@@ -220,13 +224,15 @@ En .NET y Java, el tipo de parámetro define el tipo de datos de entrada. Por ej
 Para los lenguajes que se escriben dinámicamente, como JavaScript, use la propiedad ```dataType``` del archivo function.json. Por ejemplo, para leer el contenido de una solicitud HTTP en formato binario, establezca ```dataType``` en ```binary```:
 
 ```JSON
+JSON
 
 {
     "dataType": "binary",
     "type": "httpTrigger",
     "name": "req",
     "direction": "in"
-}```
+}
+```
 
 Otras opciones para dataType son stream y string.
 
@@ -234,9 +240,9 @@ Otras opciones para dataType son stream y string.
 
 Todos los desencadenadores y enlaces tienen una propiedad de dirección en el archivo function.json:
 
-    * En el caso de los desencadenadores, esta propiedad siempre aparece como ```in```
-    * Los enlaces de entrada y de salida usan ```in``` y ```out```
-    * Algunos enlaces admiten la dirección especial ```inout```. Si utiliza ```inout```, solo estará disponible la opción ```inout``` mediante la pestaña Integrar en el portal.
+* En el caso de los desencadenadores, esta propiedad siempre aparece como ```in```
+* Los enlaces de entrada y de salida usan ```in``` y ```out```
+* Algunos enlaces admiten la dirección especial ```inout```. Si utiliza ```inout```, solo estará disponible la opción ```inout``` mediante la pestaña Integrar en el portal.
 
 Cuando se usan atributos en una biblioteca de clases para configurar los desencadenadores y los enlaces, la dirección se proporciona en un constructor de atributos o se deduce del tipo de parámetro.
 
@@ -246,7 +252,9 @@ Cuando se usan atributos en una biblioteca de clases para configurar los desenca
 Supongamos que quiere escribir una fila nueva en Azure Table Storage cada vez que aparezca un nuevo mensaje en Azure Queue Storage. Este escenario puede implementarse mediante un desencadenador de Azure Queue Storage y un enlace de salida de Azure Table Storage.
 
 Este es un archivo function.json para este escenario.
+
 ```JSON
+JSON
 
 {
   "bindings": [
@@ -265,7 +273,8 @@ Este es un archivo function.json para este escenario.
       "connection": "MY_TABLE_STORAGE_ACCT_APP_SETTING"
     }
   ]
-}```
+}
+```
 
 El primer elemento de la matriz ```bindings``` es el desencadenador de Queue Storage. Las propiedades ```type``` y ```direction``` identifican el desencadenador. La propiedad ```name``` identifica el parámetro de función que va a recibir el contenido del mensaje de cola. El nombre de la cola que supervisar está en queueName y la cadena de conexión, en la configuración de la aplicación identificada por connection.
 
@@ -274,6 +283,7 @@ El segundo elemento de la matriz ```bindings``` es el enlace de salida de Azure 
 ### Ejemplo de script de C#
 
 Este es el código de script de C# que funciona con este enlace y este desencadenador. Tenga en cuenta que el nombre del parámetro que proporciona el contenido del mensaje de cola ```order```; este nombre se requiere porque el valor de propiedad ```name``` en function.json es order.
+
 ```C#
 
 #r "Newtonsoft.Json"
@@ -298,7 +308,8 @@ public class Person
     public string RowKey { get; set; }
     public string Name { get; set; }
     public string MobileNumber { get; set; }
-}```
+}
+```
 
 ### Ejemplo de JavaScript
 
@@ -318,7 +329,8 @@ module.exports = async function (context, order) {
 function generateRandomId() {
     return Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15);
-}```
+}
+```
 
 Ejemplo de biblioteca de clases
 
@@ -349,7 +361,8 @@ public class Person
     public string RowKey { get; set; }
     public string Name { get; set; }
     public string MobileNumber { get; set; }
-}```
+}
+```
 
 
 https://learn.microsoft.com/es-es/training/modules/develop-azure-functions/4-connect-azure-services
