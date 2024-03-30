@@ -2,7 +2,7 @@
 
 ## Exploración de Azure Blob Storage
 
-**Blob Storage**: Solución de almacenamiento de objetos. Está optimizado para el almacenamiento de cantidades masivas de datos no estructurados. Cuenta con varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage. Es el tipo más utilizado, para el desarrollo de aplicaciones, por ejemplo imagenes para mostrar en una pagina web. Se guardan en espacios logicos, es decir, en contenedores.
+**Blob Storage**: Solución de almacenamiento de objetos. Está optimizado para el almacenamiento de cantidades masivas de datos no estructurados. Cuenta con varios servicios de almacenamiento que podemos tener en una cuenta, por lo que es necesario crear una cuenta de Storage. Es el tipo más utilizado, para el desarrollo de aplicaciones, por ejemplo imágenes para mostrar en una pagina web. Se guardan en espacios lógicos, es decir, en contenedores.
 
 Blob Storage está diseñado para:
 
@@ -23,17 +23,17 @@ Ofrece dos niveles de rendimiento de cuentas de almacenamiento, *estándar* y *p
 - **Estándar:** se trata de la cuenta de uso general v2 estándar y se recomienda para la mayoría de los escenarios en los que se usa Azure Storage.
 
 Dentro del nivel ***Standard***: Cuenta con:
-**Files**: similar a File Server, donde se comparten archivos mediante SMB. Tambien se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
+**Files**: similar a File Server, donde se comparten archivos mediante SMB. También se pueden realizar llamadas REST. SE puede sincronizar tanto con servidores OnPremise como con servidores onCloud.
 
-- **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser más efectivo y con mejor renidimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
+- **Premium:** (son cuentas exclusivas) no se comparte con otros servicios, para ser más efectivo y con mejor rendimiento. Si crea una cuenta Premium, puede elegir entre **tres tipos de cuenta**:
 
-  - **blobs en bloques**: de bloque, se guardan secuencialemente, se usa para videos, imagenes, videos.
+  - **blobs en bloques**: de bloque, se guardan secuencialemente, se usa para videos, imágenes, videos.
   - **blobs en páginas**: utilizados para guardar discos(no administrados) de maquinas virtuales.
   - **recursos compartidos de archivos**: similar a File server(SMB)
 
 **Append**: utilizados guardar archivos secuenciales, por ejemplo guardar logs, en donde se incorpora información a la ya existente.
 
-**Tables**: Base de datos NoSQL, para guardar información de tipo llave:valor. Escalan dinaicamente, son de respuesta rapidas, siempre y cuando la información que se almacene sea especifica, como ser configuracions.
+**Tables**: Base de datos NoSQL, para guardar información de tipo llave:valor. Escalan dinámicamente, son de respuesta rápidas, siempre y cuando la información que se almacene sea especifica, como ser configuraciones.
 
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
 
@@ -514,10 +514,10 @@ Existen 4 capas de acceso:
 
 - Premiun(visto antes): No es posible cambiar a otras capas.
 
-Es posible intercambar entre capas
+Es posible intercambiar entre capas
 - **Hot**(*Dentro de Blob Standard*): para acceder a los archivos de manera frecuente. Alto costo de almacenamiento es caro, bajo costo de acceso.
 - **Cold**(*Dentro de Blob Standard*): el acceso es para archivos no  tan frecuentes. Menor costo de almacenamiento, y mayor costo de acceso(Comparado a HOT).
-- **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasandolo a capa Cold o Hot.
+- **Archive**(*Dentro de Blob Standard*): sin acceso al archivo, pero se almacena por temas de cumplimiento o auditorias. Es la capa menos costosa de almacenamiento, pero la más costosa de acceder. Para acceder a un archivo se debe "rehidratar" el archivo(proceso que puede horas en base a la prioridad [Alta o Normal]) pasándolo a capa Cold o Hot.
 
 
 

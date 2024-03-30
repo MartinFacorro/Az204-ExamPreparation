@@ -6,13 +6,13 @@ https://learn.microsoft.com/es-es/training/paths/create-azure-app-service-web-ap
 Azure App Services: es servicio basado en HTTP, donde podemos alojar aplicaciones web, RestAPI, BackEnd de aplicaciones móviles.
 
 ### Escalado de aplicaciones web
-Escalado vertical: refiere a la capaciad de aumentar o reducir el numero de nucleos de CPU, la memoria, el espacio en disco, etc.
+Escalado vertical: refiere a la capacidad de aumentar o reducir el numero de núcleos de CPU, la memoria, el espacio en disco, etc.
 
-Escalado horizontal: refiere a la capacidad de aumentar o reducir el numero de instancias que ejecutan la aplicacion web.
+Escalado horizontal: refiere a la capacidad de aumentar o reducir el numero de instancias que ejecutan la aplicación web.
 
 
-### Integracion e implementacion continua
-Azure Portal proporciona integracion con varios servicios de control de versiones, como:
+### Integración e implementación continua
+Azure Portal proporciona integración con varios servicios de control de versiones, como:
 
 * Azure DevOps
 * GitHub
@@ -20,11 +20,11 @@ Azure Portal proporciona integracion con varios servicios de control de versione
 * FTP
 * Local Git repository
 
-### Ranuras de implementacion
-Las ranuras de implementacion permiten tener multiples instancias de la aplicacion web, para probar nuevas versiones de la aplicacion, sin afectar la version en produccion.
+### Ranuras de implementación
+Las ranuras de implementación permiten tener múltiples instancias de la aplicación web, para probar nuevas versiones de la aplicación, sin afectar la versión en producción.
 
 ### App Service en Linux
-Azure App Service permite alojar aplicaciones web en Linux(tambien conocidas como WebApp for Container), con soporte para varios lenguajes de programacion, como Node.js, PHP, Python, .NET Core, Ruby, Java, etc.
+Azure App Service permite alojar aplicaciones web en Linux(también conocidas como WebApp for Container), con soporte para varios lenguajes de programación, como Node.js, PHP, Python, .NET Core, Ruby, Java, etc.
 
 Es posible consultar la lista de lenguajes soportados mediante el siguiente comando:
 
@@ -34,18 +34,18 @@ powershell
 az webapp list-runtimes --os-type linux
 ```
 
-❕ **Nota**: Limitciones de App Service en Linux:
+❕ **Nota**: Limitaciones de App Service en Linux:
 
 * No se admite en el plan tarifa compartido
-* Las imagenes integradas, el codigo y el contenido se asignan a un volumen de almacenamiento para el contenido web, respaldado por Azure Storage. La latencia de disco es mayor y mas variables que la del sistema de archivos del contenedor.
+* Las imágenes integradas, el código y el contenido se asignan a un volumen de almacenamiento para el contenido web, respaldado por Azure Storage. La latencia de disco es mayor y mas variables que la del sistema de archivos del contenedor.
 
 ## Examen de los planes de Azure App Service
-Cada aplicacion se ejecuta siempre en un App Service Plan(ASP), que define un conjunto de recursos de computo para una aplicacion web. Pueden configurarse una o varias aplicaciones en un mismo ASP, compartiendo los mismos recursos informaticos del plan.
+Cada aplicación se ejecuta siempre en un App Service Plan(ASP), que define un conjunto de recursos de computo para una aplicación web. Pueden configurarse una o varias aplicaciones en un mismo ASP, compartiendo los mismos recursos informáticos del plan.
 
 Cuando se crea una plan de App Service, se debe seleccionar el tipo de sistema operativo, el tamaño de la instancia de la maquina virtual, el numero de instancias y el nivel de tarifa.
 
 ### Planes de tarifa de Azure App Service
-El plan determina que caracteristicas de App Service obtendra y cuanto pagara por el plan. Existen algunos planes de tarifa:
+El plan determina que características de App Service obtendrá y cuanto pagara por el plan. Existen algunos planes de tarifa:
 
 * **Proceso compartido**: Gratis y Compartido, se ejecutan en recursos compartidos con otros usuarios de Azure. No escala horizontalmente.
 * **Proceso dedicado**: Básico, Estándar, Premium, PremiumV2 y PremiumV3, las aplicaciones se ejecutan en recursos dedicados, solo las aplicaciones del mismo plan comparten recursos.
@@ -53,27 +53,27 @@ El plan determina que caracteristicas de App Service obtendra y cuanto pagara po
 
 ## Implementación en App Service
 
-### Implementacion automatizada
-La implementacion automatizada es un proceso que se usa para insertar nuevas caracteristicas y correcciones de errores en un patron repetitivo y rapido con un efecto minimo en los usuarios finales.
+### Implementación automatizada
+La implementación automatizada es un proceso que se usa para insertar nuevas características y correcciones de errores en un patrón repetitivo y rápido con un efecto mínimo en los usuarios finales.
 
-Azure admite varios origenes para la implementacion automatizada:
-* Azure DevOps Services: inserta el codigo en Azure DevOps Services, compila, ejecuta pruebas, genera una version e inserta el codigo en una aplicacion web de Azure.
-* GitHub: directamente desde GitHub. Los cambios que se insertan en la rama de produccion en GitHub se implementan automaticamente.
+Azure admite varios orígenes para la implementación automatizada:
+* Azure DevOps Services: inserta el código en Azure DevOps Services, compila, ejecuta pruebas, genera una versión e inserta el código en una aplicación web de Azure.
+* GitHub: directamente desde GitHub. Los cambios que se insertan en la rama de producción en GitHub se implementan automáticamente.
 * Bitbucket: similar a GitHub.
 
-### Implementacion manual
-Algunas de las opciones para insertar codigo de manera manual son:
+### Implementación manual
+Algunas de las opciones para insertar código de manera manual son:
 
-* Git: direccion URL de Git que se puede agregar como repositorio remoto. Al insertar en el repositorio remoto, se implementa la aplicacion.
-* Cli: caracteristica de la interfaz de la linea de comandos que empaqueta la aplicacion y la implementa. `az webapp up` puede crear una aplicacion web de App Service de forma automatica si todavia no ha creado una.
-* Implementacion desde un archivo Zip: use `curl` o una utilidad HTTP similar para enviar un archivo ZIP de los archivos de la aplicacion a App Service.
-* FTP/S: FTP o FTPS es una manera tradicional de insertar el codigo en muchos entornos de hospedaje, incluido App Service.
+* Git: dirección URL de Git que se puede agregar como repositorio remoto. Al insertar en el repositorio remoto, se implementa la aplicación.
+* Cli: característica de la interfaz de la linea de comandos que empaqueta la aplicación y la implementa. `az webapp up` puede crear una aplicación web de App Service de forma automática si todavía no ha creado una.
+* Implementación desde un archivo Zip: use `curl` o una utilidad HTTP similar para enviar un archivo ZIP de los archivos de la aplicación a App Service.
+* FTP/S: FTP o FTPS es una manera tradicional de insertar el código en muchos entornos de hospedaje, incluido App Service.
 
 ## Exploración de la autenticación y autorización en App Service
-La autenticacion y autorizacion son caracteristicas de App Service que permiten controlar el acceso a las aplicaciones web. Las aplicaciones web pueden requerir autenticacion para acceder a ellas, y pueden requerir autorizacion para acceder a recursos especificos.
+La autenticación y autorización son características de App Service que permiten controlar el acceso a las aplicaciones web. Las aplicaciones web pueden requerir autenticación para acceder a ellas, y pueden requerir autorización para acceder a recursos específicos.
 
 ### ¿Por qué usar la autenticación integrada?
-La autenticacion integrada es una forma sencilla de controlar el acceso a las aplicaciones web. Los marcos web integrados incluyen Azure AD, Facebook, Google y Twitter.
+La autenticación integrada es una forma sencilla de controlar el acceso a las aplicaciones web. Los marcos web integrados incluyen Azure AD, Facebook, Google y Twitter.
 
 ### Funcionamiento
 Cuando está habilitado, cada solicitud HTTP entrante pasa a través de él antes de que el código de aplicación lo controle. Este módulo controla varios aspectos de la aplicación:
@@ -97,11 +97,11 @@ El flujo de autenticación se inicia cuando un usuario intenta acceder a una apl
 * El proveedor de identidades emite un token de OAuth al módulo de autenticación y autorización.
 * El módulo de autenticación y autorización valida el token y, si es válido, permite que el usuario acceda a la aplicación web protegida.
 
-El flujo es el mismo para todos los proveedores, pero varia en funcion de si desea iniciar sesion con el SDK del proveedor o con el SDK de Azure AD.
+El flujo es el mismo para todos los proveedores, pero varia en función de si desea iniciar sesión con el SDK del proveedor o con el SDK de Azure AD.
 
-* Sin SDK del proveedor: la aplicacion delega el inicio de sesion federado a App Service. Por lo general suele ser el caso de las aplicaciones de explorador web, que pueden presentar una pagina de inicio de sesion personalizada, del proveedor al usuario. El usuario inicia sesion en el proveedor y el proveedor redirige al usuario de vuelta a la aplicacion web con un token de acceso.
+* Sin SDK del proveedor: la aplicación delega el inicio de sesión federado a App Service. Por lo general suele ser el caso de las aplicaciones de explorador web, que pueden presentar una pagina de inicio de sesión personalizada, del proveedor al usuario. El usuario inicia sesión en el proveedor y el proveedor redirige al usuario de vuelta a la aplicación web con un token de acceso.
 
-* Cos SDK del proveedor: La aplicación inica manualmente la sesio del usuario  con el proveedor y luego envía el token de autorización a App Service. Por lo general, suele ser los casos de aplicaciones sin explorar, como API de REST, Azure Functions, los clientes del explorador JavaScript y las aplicaciones móviles nativas. Que no pueden presentar la pagina de inicio del proveedor al usuario.
+* Cos SDK del proveedor: La aplicación inicia manualmente la sesión del usuario  con el proveedor y luego envía el token de autorización a App Service. Por lo general, suele ser los casos de aplicaciones sin explorar, como API de REST, Azure Functions, los clientes del explorador JavaScript y las aplicaciones móviles nativas. Que no pueden presentar la pagina de inicio del proveedor al usuario.
 
 ### Almacén de tokens
 App Service proporciona un almacén de tokens integrado, que es un repositorio de tokens que están asociados a los usuarios de las aplicaciones web, API o aplicaciones móviles nativas. Al habilitar la autenticación con cualquier proveedor, este almacén de tokens pasa a estar inmediatamente disponible para la aplicación,
