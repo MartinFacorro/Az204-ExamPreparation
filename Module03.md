@@ -15,8 +15,9 @@ Blob Storage está diseñado para:
 
 Los usuarios o las aplicaciones cliente pueden acceder a objetos en Blob Storage a través de HTTP/HTTPS, desde cualquier lugar del mundo. Se puede acceder a los objetos de Blob Storage mediante la API REST de Azure Storage, Azure PowerShell, la CLI de Azure o una biblioteca de cliente de Azure Storage.
 
+Una cuenta de Azure Storage es el **contenedor de nivel superior** para todo su Azure Blob Storage. La cuenta de almacenamiento proporciona un espacio de nombres único para los datos de Azure Storage que es accesible desde cualquier lugar del mundo a través de HTTP o HTTPS.
 
-### Tipos de Blob Storage
+### Tipos de cuenta de almacenamiento Azure Storage
 
 Ofrece dos niveles de rendimiento de cuentas de almacenamiento, *estándar* y *premium*.
 
@@ -37,6 +38,17 @@ Dentro del nivel ***Standard***: Cuenta con:
 
 **Queues**: Cola de mensajes, para encolar mensajes y posteriormente ir desencolando. La idea es desacoplar servicios, para tener bajar interdependencia entre aplicaciones o servicios.
 
+### Niveles de acceso a datos de blob en bloques
+Azure Storage ofrece diferentes opciones para obtener acceso a los datos de blob en bloques, en función de los patrones de uso. Al seleccionar el nivel de acceso adecuado a sus necesidades, puede almacenar sus datos de blob en bloques de la manera más rentable.
+
+Los niveles de acceso disponibles son:
+
+- **frecuente** que está optimizado para el acceso frecuente de objetos en la cuenta de almacenamiento. El nivel de acceso frecuente tiene los costos de almacenamiento más altos, pero los costos de acceso más bajos. Las nuevas cuentas de almacenamiento se crean en el nivel de acceso frecuente de forma predeterminada.
+- **Esporádico** está optimizado para almacenar grandes cantidades de datos a los que se accede con poca frecuencia y que llevan guardados al menos 30 días. El nivel de acceso esporádico tiene menores costos de almacenamiento y mayores costos de acceso en comparación con el nivel de acceso frecuente.
+- **Esporádico** que está optimizado para almacenar al menos durante 90 días datos a los que se accede y se almacenan con poca frecuencia. El nivel de acceso esporádico tiene menores costes de almacenamiento y mayores costes de acceso en comparación con el nivel de acceso esporádico.
+- **Almacenamiento** de archivo está disponible solo para blobs en bloques individuales. El nivel de acceso de archivo está optimizado para los datos que toleran varias horas de latencia de recuperación y que permanecen en el nivel de acceso de archivo durante un mínimo de 180 días. El nivel de almacenamiento de archivo es el más rentable de todos para almacenar datos, pero el acceso a esos datos es más costoso que acceder a los datos del nivel de acceso frecuente o esporádico.
+
+
 ### Detección de los tipos de recursos de Azure Blob Storage
 
 ofrece tres tipos de recursos:
@@ -49,11 +61,21 @@ ofrece tres tipos de recursos:
 
 Una cuenta de almacenamiento de Azure es un recurso de nivel superior que se utiliza para almacenar datos. Cada cuenta de almacenamiento tiene un espacio de nombres único y se puede acceder a ella desde cualquier lugar del mundo a través de HTTP o HTTPS. Puede usar cuentas de almacenamiento para almacenar datos de objetos, archivos, tablas y colas.
 
+Ejemplo, si la cuenta de almacenamiento se llama mystorageaccount, los puntos de conexión predeterminados para Blob Storage son:
+
+```bash
+bash
+
+http://mystorageaccount.blob.core.windows.net
+
+```
+
+
 #### Contenedores
 
 Un contenedor organiza un conjunto de blobs, de forma parecida a un directorio en un sistema de archivos. Una cuenta de almacenamiento puede contener un número ilimitado de contenedores y un contenedor puede almacenar un número ilimitado de blobs.
 
-n nombre de contenedor debe ser un nombre DNS válido, ya que forma parte del URI (identificador uniforme de recursos) único que se usa para direccionar el contenedor o sus blobs. Siga estas reglas al asignar un nombre a un contenedor:
+Un nombre de contenedor debe ser un nombre DNS válido, ya que forma parte del URI (identificador uniforme de recursos) único que se usa para direccionar el contenedor o sus blobs. Siga estas reglas al asignar un nombre a un contenedor:
 
 * Los nombres de contenedor pueden tener entre 3 y 63 caracteres.
 * Los nombres de contenedor deben comenzar por una letra o un número, y solo pueden contener letras en minúscula, números y el carácter de guión (-).
@@ -77,6 +99,20 @@ Azure Storage admite tres tipos de blobs:
 * Los **blobs en bloques** almacenan texto y datos binarios. Los blobs en bloques se componen de bloques de datos que se pueden administrar de forma individual. Los blobs en bloques pueden almacenar hasta aproximadamente 190,7 TiB.
 * Los **blobs en anexos** constan de bloques, como los blobs en bloques, pero están optimizados para operaciones de anexión. Los blobs en anexos resultan muy convenientes para escenarios como el registro de datos de máquinas virtuales.
 * Los **blobs en páginas** almacenan archivos de acceso aleatorio con un tamaño de hasta 8 TB. Los blobs en páginas almacenan los archivos del disco duro virtual (VHD) y sirven como discos para las máquinas virtuales de Azure.
+
+El URI de un blob es similar a:
+
+```BASH
+BASH
+
+https://myaccount.blob.core.windows.net/mycontainer/myblob
+
+O
+
+https://myaccount.blob.core.windows.net/mycontainer/myvirtualdirectory/myblob
+
+```
+
 
 ### Exploración de las características de seguridad de Azure Storage
 
@@ -109,7 +145,7 @@ Azure Storage ofrece distintos niveles de acceso, lo que permite almacenar datos
 
 * **Frecuente**: Optimizado para almacenar datos que se consultan con frecuencia.
 * **Esporádico**: optimizado para almacenar datos a los que se accede con poca frecuencia; se almacenan durante un mínimo de 30 días.
-* **Nivel de acceso aislado**: está optimizado para almacenar datos a los que se accede con poca frecuencia y al menos durante 90 días. El nivel de acceso aislado tiene menores costes de almacenamiento y mayores costes de acceso en comparación con el nivel de acceso esporádico.
+* **Nivel de acceso aislado(Frio)**: está optimizado para almacenar datos a los que se accede con poca frecuencia y al menos durante 90 días. El nivel de acceso aislado tiene menores costes de almacenamiento y mayores costes de acceso en comparación con el nivel de acceso esporádico.
 * **Archivo**: optimizado para almacenar datos a los que se accede muy pocas veces y almacenados durante al menos 180 días con requisitos de latencia flexibles, del orden de horas.
 
 
@@ -191,6 +227,14 @@ Si define más de una acción en el mismo blob, la administración del ciclo de 
 Un blob se encuentra en el nivel de acceso de archivo, se considera que está sin conexión y no se puede leer ni modificar. Para leer o modificar los datos de un blob archivado, primero debe rehidratar el blob en un nivel en línea, ya sea el nivel de acceso frecuente o esporádico. Hay dos opciones para rehidratar un blob que se almacena en el nivel de archivo:
 
 - **Copiar un blob archivado en un nivel en línea** ```Copy blob```
+
+| Destino de copia de blobs | Origen de nivel de acceso frecuente | Origen de nivel de acceso esporádico | Origen de nivel de archivo |
+|---------------------------|------------------------------------|-------------------------------------|-----------------------------|
+| Nivel frecuente           | Compatible                         | Compatible                          | Se admite dentro de la misma cuenta. Requiere la rehidratación de blobs. |
+| Nivel esporádico          | Compatible                         | Compatible                          | Se admite dentro de la misma cuenta. Requiere la rehidratación de blobs. |
+| Nivel de archivo          | Compatible                         | Compatible                          | No compatible               |
+
+
 - **Cambio del nivel de acceso de un blob a un nivel en línea** ```Set Blob Tier```
 
 La rehidratación de un blob de un nivel de acceso de archivo puede tardar varias horas en completarse. Microsoft recomienda rehidratar blobs más grandes para obtener un rendimiento óptimo. La rehidratación de varios blobs pequeños de forma simultánea puede requerir tiempo adicional.
@@ -446,7 +490,7 @@ Los contenedores y los blobs admiten metadatos personalizados, representados com
 
 Los metadatos de un recurso de blob o de un recurso contenedor se pueden recuperar o establecer directamente, sin devolver ni modificar el contenido del recurso.
 
-Tenga en cuenta que los valores de metadatos solo se pueden leer o escribir en su totalidad; no se admiten actualizaciones parciales. Cuando se establecen los metadatos de un recurso, se sobrescriben los valores de metadatos existentes para dicho recurso.
+Tenga en cuenta que los valores de metadatos solo se pueden leer o escribir en su totalidad; no se admiten actualizaciones parciales. Cuando se establecen los metadatos de un recurso, se sobre-escriben los valores de metadatos existentes para dicho recurso.
 
 ### Recuperación de propiedades y metadatos
 
@@ -460,7 +504,7 @@ La sintaxis del URI para recuperar los encabezados de metadatos de un blob es la
 
 ### Establecer encabezados de metadatos
 
-La operación PUT establece los encabezados de metadatos del contenedor o blob especificado, sobrescribiendo los metadatos existentes en el recurso. Cuando se llama a PUT sin incluir encabezados en la solicitud, se borran todos los metadatos existentes en el recurso.
+La operación PUT establece los encabezados de metadatos del contenedor o blob especificado, sobre escribiendo los metadatos existentes en el recurso. Cuando se llama a PUT sin incluir encabezados en la solicitud, se borran todos los metadatos existentes en el recurso.
 
 La sintaxis del URI para establecer los encabezados de metadatos de un contenedor es la siguiente:
 
@@ -529,7 +573,7 @@ Permite mantener copia locales de archivos al mismo tiempo que en la nube. Utili
 
 ## Trabajar a nivel de Código
 
-Libreria cliente ```azure.storage.blob```
+Librería cliente ```azure.storage.blob```
 
 Por orden de llamada:
 
