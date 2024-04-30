@@ -1,6 +1,14 @@
 # Module 04: Azure Cosmos DB storage
 
+## Exploración de Azure Cosmos DB
+
+### Identificación de las principales ventajas de Azure Cosmos DB
+
 Base de Datos NoSQL, semi estructurada con replicacion global. Es decir, puedo tener múltiples replicas en diferentes regiones. Diseñada para proporcionar una latencia baja, una escalabilidad elástica del rendimiento
+
+#### Ventajas clave de distribución global
+
+
 
 **Consistencia**: se refiere a la consistencia de la información en cada replica. Esto afecta directamente a la performance.
 
